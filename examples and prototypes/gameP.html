@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<style type="text/css">
+			canvas{
+				border: 3px solid black;
+			}
+			h4 {
+				margin: 2px;
+			}
+		</style>
+		<title>BASIC HTML5 GAME ENGINE (JS PROTOTYPE TEST)</title>
+		<meta name="description" content="HTML5 GAME THING USING PROTOTYPE">
+		<meta name="author" content="brian151 (github)">
+		<meta name="organization" content="Quality Cat Games">
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<canvas id="gameScreen" width="600" height="400">Your browser doesn't support HTML5 Canvas!!!</canvas>
+		<h4>PLAYER SPEED: <span id="PS_Meter"></span></h4>
+		<h4>Bros (total): <span id="Bro_Meter"></span></h4>
+		<h4>TP Bros (blue): <span id="Bro1_Meter"></span></h4>
+		<h4>Walk Bros (red): <span id="Bro2_Meter"></span></h4>
+		<h4>Player Bros (light blue): <span id="Bro3_Meter"></span></h4>
+		<div>
+		controls: <br/>
+		arrow keys to move, mouse to spawn walk-bro, w to increase player speed, s to decrease it<br/>
+		p to pause<br/>
+		WIP: c to open 'admin console' (NOT DONE!!!)
+		</div>
+		<script src="scripts/coreP.js"></script>
+	</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<style type="text/css">
+			canvas{
+				border: 3px solid black;
+			}
+			h4 {
+				margin: 2px;
+			}
+			#instruct{
+				font-weight:bold;
+			}
+		</style>
+		<title>HTML5 UI RENDER TEST</title>
+		<meta name="description" content="HTML5 GUI TEST">
+		<meta name="author" content="brian151 (github)">
+		<meta name="organization" content="Quality Cat Games">
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<canvas id="gameScreen" width="600" height="400">Your browser doesn't support HTML5 Canvas!!!</canvas>
+		<script src="scripts/demo4/slice9_UI.js"></script>
+		<script src="scripts/demo4/UIComponents.js"></script>
+		<script src="scripts/demo4/coreUI2.js"></script>
+		<h3>instructions</h3>
+		<div id="instruct">
+		arrow keys: move window<br/>
+		<strike>c: change window size</strike><br/>
+		<canvas id="screenP" style="display:none" width="600" height="400">Your browser doesn't support HTML5 Canvas!!!</canvas>
+		</div>
+	</body>
+</html>

@@ -21,7 +21,8 @@ Game.prototype.tick = function(){
 			var spriteData = JSON.parse(this.assets.requestAsset("txt","rainbowTestAnim"));
 			var spriteImage = this.assets.requestAsset("image","rainbowTest");
 			var testSpriteD = new SpriteData(spriteData);
-			this.sprites.push(new Sprite(100,100,spriteImage,testSpriteD));
+			this.sprites.push(this.mySprite = new Sprite(100,100,spriteImage,testSpriteD));
+			this.mySprite.gotoAndStop(1);
 		}
 	}
 	

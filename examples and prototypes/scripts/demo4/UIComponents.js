@@ -1,4 +1,4 @@
-function UIText(parent,x,y,txt,align,font) {
+function UIText(parent,x,y,txt,align,font,linked) {
 	this.parent = parent;
 	if(!font){
 		this.font = {
@@ -20,6 +20,10 @@ function UIText(parent,x,y,txt,align,font) {
 	this.x = x;
 	this.y = y;
 	this.txt = txt;
+	if(linked) {
+		this.txt = UIDataLinker[linked];
+		this.txtLink = linked;
+	}
 	this.textAlign = align;
 	/*console.log("UI TEXT POS: " + x + " , " + y);
 	console.log("UI TEXT ALIGN: " + this.textAlign);
@@ -28,6 +32,9 @@ function UIText(parent,x,y,txt,align,font) {
 }
 UIText.prototype.tick = function() {
 	//console.log("UI TEXT TICK!");
+	if(this.txtLink) {
+		this.txt = UIDataLinker[this.txtLink];
+	}
 	if (this.textAlign == "center") {
 		this.x = this.parent.x + Math.round((this.parent.width / 2));
 	} else if (this.textAlign == "right") {
@@ -58,6 +65,13 @@ var UIComponent = function(parent,x,y,w,h,configData) {
 	this.overFlowY = configData.overflowY;
 	this.x = this.parent.x + this.oX;
 	this.y = this.parent.y + this.oY;
+	if(configData.boundMethods) {
+		for(var i=0; i< configData.boundMethods.length; i++) {
+			var id = configData.boundMethods[i].id;
+			var m = configData.boundMethods[i].m;
+			UIFCNLinker[id] = this[m];
+		}
+	}
 	if (this.oX < 1 && this.oX > 0) this.x = this.parent.x + Math.round((this.parent.width * this.oX));
 	if (this.oY < 1 && this.oY > 0) this.y = this.parent.y + Math.round((this.parent.height * this.oY));
 	if(w == "fill"){
@@ -102,7 +116,7 @@ var UIComponent = function(parent,x,y,w,h,configData) {
 	this.resized = false;
 }
 UIComponent.prototype.init = function() {
-	console.log("GUI COMPONENT INIT!");
+	//console.log("GUI COMPONENT INIT!");
 	for (var i=0; i < this.configData.components.length; i++){
 		var curr = this.configData.components[i];
 		switch(curr.type) {
@@ -114,6 +128,16 @@ UIComponent.prototype.init = function() {
 			}
 			case "skinned_component" : {
 				var temp = this.components.push(new SkinnedUIComponent(this,curr.x,curr.y,curr.w,curr.h,curr));
+				temp--;
+				break;
+			}
+			case "button" : {
+				var temp = this.components.push(new UIButton(this,curr.x,curr.y,curr.w,curr.h,curr));
+				temp--;
+				break;
+			}
+			case "text" : {
+				var temp = this.components.push(new UIText(this,curr.x,curr.y,curr.txt,curr.align,curr.font,curr.link));
 				temp--;
 				break;
 			}
@@ -196,7 +220,9 @@ UIComponent.prototype.findMainParentComponent = function() {
 	}
 	return out;
 }
-
+UIComponent.prototype.close = function() {
+	alert("this UI Panel has been closed!");
+}
 
 function SkinnedUIComponent(parent,x,y,w,h,configData) {
 	UIComponent.call(this,parent,x,y,w,h,configData);
@@ -288,7 +314,7 @@ SkinnedUIComponent.prototype.onClick = function(mDat,oDat,clickID) {
 		this.findMainParent().hasFocusedUI = true;
 		this.findMainParent().focusUI(this.findMainParentComponent());
 		this.clickedElement = clickID; 
-		console.log("onClick(" + clickID + ")!");
+		//console.log("onClick(" + clickID + ")!");
 	}
 }
 SkinnedUIComponent.prototype.customTick = function(){
@@ -420,3 +446,111 @@ SkinnedUIComponent.prototype.customDraw = function(){
 		}
 	}
 }
+
+var UIButton = function(parent,x,y,w,h,configData) {
+	this.oX = x;
+	this.oY = y;
+	this.parent = parent;
+	this.x = this.parent.x + Math.floor((this.parent.width/2)) - Math.round((this.width / 2));
+	this.y = this.parent.y + this.oY;
+	this.width = w;
+	this.height = h;
+	this.color = configData.color;
+	this.colorOver = configData.color2;
+	this.colorPress = configData.color3;
+	this.currColor = this.color;
+	this.selected = false;
+	this.pressed = false;
+	var callBack = configData.onClick;
+	var scope = callBack.charAt(0);
+	/*if (scope == "$") {
+		var mainParent = this.findMainParentComponent();
+		alert(callBack.slice(1));
+		this.clickCallBack = mainParent[callBack.slice(1)];
+		alert(typeof this.clickCallBack);
+	}*/ //Waste of time, doesn't work, never will... screw you, JavaScript!
+	if (scope == "@") {
+		this.clickCallBack = UIFCNLinker[callBack.slice(1)];
+	}
+	this.txt = new UIText(this,configData.txt.x,configData.txt.y,configData.txt.txt,"center",configData.txt.font);
+}
+UIButton.prototype.tick = function(){
+	this.x = this.parent.x + Math.round((this.parent.width/2)) - Math.round((this.width / 2));
+	this.y = this.parent.y + this.oY;
+	var mouseOver = GameObjs.controller.checkMouseCollision(this);
+	if (mouseOver.result) {
+		this.selected = true;
+	} else {
+		this.selected = false;
+	}
+	if(this.selected && GameObjs.controller.mouseState.down) this.pressed = true;
+	if (this.selected) this.currColor = this.colorOver;
+	if (this.pressed) this.currColor = this.colorPress;
+	if(this.selected && this.pressed && !GameObjs.controller.mouseState.down) {
+		this.pressed = false;
+		this.clickCallBack();
+	}
+	if(!this.selected && this.pressed && !GameObjs.controller.mouseState.down) {
+		this.pressed = false;
+	}
+	if (!this.selected) this.currColor = this.color;
+	this.txt.tick();
+}
+UIButton.prototype.draw = function() {
+	var col2 = GameObjs.renderer.ctx.fillStyle;
+	GameObjs.renderer.ctx.fillStyle = this.currColor;
+	GameObjs.renderer.ctx.fillRect(this.x,this.y,this.width,this.height);
+	GameObjs.renderer.ctx.fillStyle = col2;
+	this.txt.draw();
+}
+UIButton.prototype.findMainParent = function() {
+	var search = this.parent;
+	if (search.isUIManager) {
+		out = search;
+	} else {
+		out = this.parent.findMainParent();
+	}
+	return out;
+}
+UIButton.prototype.findMainParentComponent = function() {
+	var search = this.parent;
+	if (search.isUIManager) {
+		out = this;
+	} else {
+		out = this.parent.findMainParent();
+	}
+	return out;
+}
+
+var UIManager = function(parent,x,y,w,h) {
+	this.x = x;
+	this.y = y;
+	this.width = w;
+	this.height = h;
+	this.isUIManager = true;
+	this.UIPanes = [];
+}
+UIManager.prototype.addPane = function(configData) {
+	console.log("GUI MANAGER ADD PANEL!");
+	var curr = configData;
+	switch(curr.type) {
+		case "component" : {
+		console.log("normal component!");
+			var temp = this.UIPanes.push(new UIComponent(this,curr.x,curr.y,curr.w,curr.h,curr));
+			temp--;
+			break;
+		}
+		case "skinned_component" : {
+			var temp = this.UIPanes.push(new SkinnedUIComponent(this,curr.x,curr.y,curr.w,curr.h,curr));
+			temp--;
+			break;
+		}
+		default: {
+			break;
+		}
+	}
+	if(curr.components){
+		this.UIPanes[temp].init();
+	}
+}
+

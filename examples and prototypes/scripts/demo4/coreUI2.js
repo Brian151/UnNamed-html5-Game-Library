@@ -159,7 +159,7 @@ function GraphicsHandler(canvas) {
 	}
 	
 	this.preRenderPattern = function(src,w,h) {
-		console.log("pre-render pattern!");
+		//console.log("pre-render pattern!");
 		var pat = this.pR.createPattern(src,"repeat");
 		var pw = this.pR.canvas.width;
 		var ph =  this.pR.canvas.height;
@@ -295,6 +295,9 @@ function checkNull(value){
 	}
 }
 
+var UIDataLinker = {};
+var UIFCNLinker = {};
+
 var GameObjs = {};
 function Game() {
 	this.state = "standby";
@@ -330,6 +333,7 @@ function Game() {
 		GameObjs.sound = this.sound;
 		this.running = true;
 		this.uiPanes = [];
+		this.totalTicks = 0;
 		this.assets.loadAsset("image","assets/UIgfx/Luna-Ice.png","LunaIce");
 		this.assets.loadAsset("image","assets/UIgfx/Luna-IceBG.png","LunaIceBG");
 		this.assets.loadAsset("image","assets/UIgfx/win8-CAC_REDUX.png","Win8CAC");
@@ -344,6 +348,9 @@ function Game() {
 			"overflowX" : 0,
 			"overflowY" : 0,
 			"freePos" : true,
+			"boundMethods" : [
+				{"m":"close","id":"close"}
+			],
 			"title" : {
 				"x" : -5,
 				"y" : -29,
@@ -414,6 +421,43 @@ function Game() {
 					},
 					"overflowX" : 3,
 					"overflowY" : 0,
+				},
+				{
+				"type" : "button",
+				"x" : 0,
+				"y" : 150,
+				"w" : 80,
+				"h" : 32,
+				"color" : "#0099ff",
+				"color2" : "#00bbff",
+				"color3" : "#0077dd",
+				"onClick" : "@close",
+				"txt" : {
+					"x" : 0,
+					"y" : 22,
+						"txt" : "close",
+						"align" : "center",
+						"font" : {
+							"w" : "bold",
+							"s" : "20px",
+							"f" : "Arial",
+							"c" : "#0000ff"
+						}
+					}
+				},
+				{
+					"type" : "text",
+					"x" : 0,
+					"y" : -8,
+					"txt" : "0",
+					"align" : "left",
+					"font" : {
+						"w" : "bold",
+						"s" : "20px",
+						"f" : "Arial",
+						"c" : "#00ddff"
+					},
+					"link" : "theTxt"
 				}
 	
 			]
@@ -555,8 +599,38 @@ function Game() {
 				"color" : "#ff7700",
 				"w" : 100,
 				"h" : 100
-			}
+			},
+			"components" : [
+				{
+				"type" : "button",
+				"x" : 0,
+				"y" : 200,
+				"w" : 80,
+				"h" : 32,
+				"color" : "#FFC200",
+				"color2" : "#FFE359",
+				"color3" : "#E5AC00",
+				"onClick" : "@sayHi",
+				"txt" : {
+					"x" : 0,
+					"y" : 22,
+						"txt" : "button",
+						"align" : "center",
+						"font" : {
+							"w" : "bold",
+							"s" : "20px",
+							"f" : "Arial",
+							"c" : "#888800"
+						}
+					}
+				}
+			
+			]
 		};
+		UIFCNLinker.sayHi = function() {
+			alert("Hello, I am a linked function!");
+		}
+		UIDataLinker.theTxt = this.totalTicks;
 		this.isUIManager = true;
 		this.hasFocusedUI = false;
 		this.focusedUI = null;
@@ -576,8 +650,8 @@ function Game() {
 	}
 	
 	this.tick = function() {
-		//always runs:
-		//end
+		UIDataLinker.theTxt = this.totalTicks;
+		this.totalTicks++;
 		this.assets.tick();
 		if (this.state == "load"){
 			if(this.assets.queuecomplete) {

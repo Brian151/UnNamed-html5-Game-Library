@@ -59,3 +59,23 @@ with drawing vector shapes.
 credits: HexCraft's Hexorium Glow used again.
 file: gameSprite.html
 
+tech demo 6 :
+Testing the ability to render UI themes similar to that of the Aero theme,
+aka: the theme used in Windows Vista and Windows 7. 
+status: WIP
+next step: colorizer. I already have the basic code to do it, 
+but due to lack of time because of unscheduled interruptions , I'm not 
+adding it to the library tonight.
+file : gameUIAero.html
+credits/license:
+code is free to modify and extend, crediting me (https://github.com/Brian151)
+However, using the original Windows Aero assets is not recommended, 
+commercially, anyways. I technically do not have permission to dictate what you
+do with them (if anything) , but if developing a commercial application, you might or
+might not get sued by microsoft for using their copyrighted assets. I chose to
+use the Aero assets because, A: I love that theme's appearance, and B: I am
+trying to re-produce one of its cool window effects, the gradient pattern overlay.
+Other notes:
+1. The official in-library name of this UI effect is undecided.
+2. Until feature is completed, it is not an official feature of
+the UI API in my game library, sorry.

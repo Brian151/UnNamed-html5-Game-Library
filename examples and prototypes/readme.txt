@@ -62,10 +62,9 @@ file: gameSprite.html
 tech demo 6 :
 Testing the ability to render UI themes similar to that of the Aero theme,
 aka: the theme used in Windows Vista and Windows 7. 
-status: WIP
-next step: colorizer. I already have the basic code to do it, 
-but due to lack of time because of unscheduled interruptions , I'm not 
-adding it to the library tonight.
+status: WIP(?)
+next step: fix what seems to be a bug(?)
+finished: titlebar effect, colorization and opacity filter
 file : gameUIAero.html
 credits/license:
 code is free to modify and extend, crediting me (https://github.com/Brian151)

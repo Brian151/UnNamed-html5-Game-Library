@@ -145,18 +145,60 @@ function InputManager(parent) {
 	
 }
 
+function colorMultiply(top, bot) {
+ return top * bot / 255;
+}
+
 function GraphicsHandler(canvas) {
 	this.ctx = canvas.getContext("2d");
 	//this.preRenderingCanvas = null;
 	//document.innerHTML += "<canvas id=\"screenP\" width=\"" + 600 + "\" height=\"" + 400 + "\"></canvas>";
 	this.preRenderingCanvas = document.getElementById("screenP");
 	this.pR = this.preRenderingCanvas.getContext("2d");
+	this.preRenderZone = document.getElementById("dynamicPre");
 	//this.preRenderingCanvas.setAttribute("display","none");
 	//a disgrace, this object needs to start pulling its own weight
 	//Perhaps the next tech demo will focus on this!
 	this.draw = function() {
 	
 	}
+	
+	this.skinEffects = function(img,img2,effectData) {
+		var effects = effectData;
+		var eff_gray = effects.grayscale;
+		var eff_color = effects.colorize;
+		var eff_opacity = effects.opacity;
+		var srcImg = img;
+		var overlayImg = img2;
+		this.preRenderZone.innerHTML += "<canvas id=\"tempPre\" width=\"" + srcImg.width + "\" height=\"" + srcImg.height + "\"></canvas>";
+		var tempCanvas = document.getElementById("tempPre");
+		var tempContext = tempCanvas.getContext("2d");
+		tempContext.drawImage(srcImg,0,0);
+		var imgData = tempContext.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+		if (eff_gray) console.log("grayscale effect enabled!");
+		if (eff_color) console.log("colorize effect enabled!");
+		if (eff_opacity) console.log("opacity effect enabled!");
+		for (var i=0; i < imgData.data.length; i += 4) {
+			if (eff_gray) {
+				var brightness = 0.34 * imgData.data[i] + 0.5 * imgData.data[i + 1] + 0.16 * imgData.data[i + 2];
+				imgData.data[i] = brightness + eff_gray.postBright;
+				imgData.data[i + 1] = brightness + eff_gray.postBright;
+				imgData.data[i + 2] = brightness + eff_gray.postBright;
+			}
+			if(eff_opacity) imgData.data[i + 3] *= eff_opacity;
+			if (eff_color) {
+				imgData.data[i] = colorMultiply(imgData.data[i],eff_color.r);
+				imgData.data[i+1] = colorMultiply(imgData.data[i+1],eff_color.g);
+				imgData.data[i+2] = colorMultiply(imgData.data[i+2],eff_color.b);
+			}
+		}
+		tempContext.putImageData(imgData,0,0);
+		tempContext.drawImage(overlayImg,0,0);
+		var newImg = new Image(srcImg.width,srcImg.height);
+		newImg.src = tempCanvas.toDataURL();
+		return newImg;
+	}
+	
 	
 	this.preRenderPattern = function(src,w,h) {
 		//console.log("pre-render pattern!");
@@ -223,9 +265,13 @@ function s9(parent,x,y,w,h,sliceData){
 		var tempH = sliceData.h;
 		this.sliceData = slice9(tempW,tempH,sliceData.skin.t,sliceData.skin.r,sliceData.skin.b,sliceData.skin.l);
 	}
-	if (sliceData.aero) {
+	if (sliceData.effects.aero) {
 		this.aero = true;
 		this.aeroImage = GameObjs.assets.requestAsset("AeroBG");
+	}
+	if (sliceData.effects.grayscale || sliceData.effects.colorize || sliceData.effects.opacity) {
+		this.img2 = GameObjs.assets.requestAsset(sliceData.img2);
+		this.img = GameObjs.renderer.skinEffects(this.img,this.img2,sliceData.effects);
 	}
 	//this.parent.renderer.ctx.drawImage(this.img,0,0);
 	this.x = x;
@@ -353,6 +399,9 @@ function Game() {
 			"overflowX" : 0,
 			"overflowY" : 0,
 			"freePos" : true,
+			"background" : {
+				"color" : "#ffffff"
+			},
 			"title" : {
 				"x" : -8,
 				"y" : -29,
@@ -363,7 +412,73 @@ function Game() {
 				"txt" : {
 					"x" : 0,
 					"y" : -8,
-					"txt" : "Aero Pane",
+					"txt" : "Aero Pane (Graphite)",
+					"align" : "center",
+					"font" : {
+						"w" : "bold",
+						"s" : "20px",
+						"f" : "Arial",
+						"c" : "#ffffff"
+					}
+				}
+			},
+			"rX" : {
+				"x" : 0,
+				"y" : 0,
+				"w" : 8,
+				"h" : 0,
+				"xO" : 0,
+				"yO" : 0,
+			},
+			"rY" : {
+				"x" : 0,
+				"y" : 0,
+				"w" : 0,
+				"h" : 8,
+				"xO" : 0,
+				"yO" : 0,
+			},
+			"debug" : false,
+			"skin" : {
+				"slice" : "slice-9",
+				"type" : "image",
+				"skin" : aeroSlices,
+				"img" : "Aero",
+				"img2" : "AeroOver",
+				"effects" : {
+					"aero" : true,
+					"grayscale" : {
+						"postBright" : 0
+					},
+					"colorize" : {
+						"r" : 16,
+						"g" : 16,
+						"b" : 16,
+					},
+					"opacity" : .6
+				}
+			}
+		};
+		
+		this.popupAeroTemplateD = {
+			"type" : "skinned_component",
+			"overflowX" : 0,
+			"overflowY" : 0,
+			"freePos" : true,
+			"background" : {
+				"color" : "#ffffff"
+			},
+			"title" : {
+				"x" : -8,
+				"y" : -29,
+				"w" : 0,
+				"h" : 29,
+				"xO" : 16,
+				"yO" : 0,
+				"txt" : {
+					"x" : 0,
+					"y" : -8,
+					"txt" : "Aero Pane (Default)",
 					"align" : "center",
 					"font" : {
 						"w" : "bold",
@@ -395,7 +510,76 @@ function Game() {
 				"type" : "image",
 				"skin" : aeroSlices,
 				"img" : "Aero",
-				"aero" : true
+				"img2" : "AeroOver",
+				"effects" : {
+					"aero" : true,
+					"opacity" : .6
+				}
+			}
+		};
+		
+		this.popupAeroTemplateP = {
+			"type" : "skinned_component",
+			"overflowX" : 0,
+			"overflowY" : 0,
+			"freePos" : true,
+			"background" : {
+				"color" : "#ffffff"
+			},
+			"title" : {
+				"x" : -8,
+				"y" : -29,
+				"w" : 0,
+				"h" : 29,
+				"xO" : 16,
+				"yO" : 0,
+				"txt" : {
+					"x" : 0,
+					"y" : -8,
+					"txt" : "Aero Pane (Custom - color: Pink , opacity: 100%)",
+					"align" : "center",
+					"font" : {
+						"w" : "bold",
+						"s" : "20px",
+						"f" : "Arial",
+						"c" : "#000000"
+					}
+				}
+			},
+			"rX" : {
+				"x" : 0,
+				"y" : 0,
+				"w" : 8,
+				"h" : 0,
+				"xO" : 0,
+				"yO" : 0,
+			},
+			"rY" : {
+				"x" : 0,
+				"y" : 0,
+				"w" : 0,
+				"h" : 8,
+				"xO" : 0,
+				"yO" : 0,
+			},
+			"debug" : false,
+			"skin" : {
+				"slice" : "slice-9",
+				"type" : "image",
+				"skin" : aeroSlices,
+				"img" : "Aero",
+				"img2" : "AeroOver",
+				"effects" : {
+					"aero" : true,
+					"grayscale" : {
+						"postBright" : 50
+					},
+					"colorize" : {
+						"r" : 255,
+						"g" : 127,
+						"b" : 182
+					}
+				}
 			}
 		};
 		UIFCNLinker.sayHi = function() {
@@ -427,7 +611,9 @@ function Game() {
 		if (this.state == "load"){
 			if(this.assets.queuecomplete) {
 				this.state = "play";
-				this.uiPanes.push(this.customWindow = new SkinnedUIComponent(this,10,50,400,200,this.popupAeroTemplate));
+				this.uiPanes.push(this.customWindow = new SkinnedUIComponent(this,10,50,500,200,this.popupAeroTemplate));
+				this.uiPanes.push(new SkinnedUIComponent(this,30,100,500,200,this.popupAeroTemplateD));
+				this.uiPanes.push(new SkinnedUIComponent(this,50,150,500,200,this.popupAeroTemplateP));
 			}
 		}
 		for (var i=this.uiPanes.length-1; i >= 0; i--) {
@@ -437,31 +623,7 @@ function Game() {
 		
 		//only hapens during "play" or "menu" game states:
 		if(this.state == "play"){
-			var up = this.controller.checkKeyDown(38);
-			var right = this.controller.checkKeyDown(39);
-			var down = this.controller.checkKeyDown(40);
-			var left = this.controller.checkKeyDown(37);
-			var cmd = this.controller.checkKeyDown(67,"C");
-			cmd = false;
-			if(up) this.customWindow.y--;
-			if(right) this.customWindow.x++;
-			if(down) this.customWindow.y++;
-			if(left) this.customWindow.x--;
-			if(cmd){
-				var h2 = prompt("new window height: ",this.customWindow.height);
-				var w2 = prompt("new window width: ",this.customWindow.width);
-				//alert(w2 + " x " + h2);
-				/*if(w2 < this.customWindow.minW){
-					w2 = this.customWindow.minW;
-					alert("specified width less than min width! Reset to min width(" + this.customWindow.minW + ")!");
-				}
-				if(h2 < this.customWindow.minH){
-					h2 = this.customWindow.minH;
-					alert("specified height less than min height! Reset to min height(" + this.customWindow.minH + ")!");
-				}*/
-				this.customWindow.width = Number(w2);
-				this.customWindow.height = Number(h2);
-			}
+			
 		}//end
 		
 		//only happens during the "play" game state:
@@ -482,29 +644,3 @@ window.onload = function(){
 	game.init("gameScreen");
 	loop = setInterval(function(){game.tick();},game.timing);
 }
-
-/*
-var theConsole = document.getElementById("cmdCon");
-function exec(){
-var cmd = theConsole.value;
-var isDims = cmd.indexOf("dims");
-var isPos = cmd.indexOf("pos");
-if(isDims == 0) {isDims = true;console.log("dimensions");}
-if(isPos == 0) {isPos = true;console.log("positon!");}
-	if(game){
-		if(isDims) var com = cmd.replace("dims[","");
-		if(isPos) var com = cmd.replace("pos[","");
-		com = com.replace("]","");
-		var com2 = com.split(",");
-		//alert(com);
-		if(isDims){
-		game.customWindow.width = Number(com2[0]);
-		game.customWindow.height = Number(com2[1]);
-		}
-		if(isPos){
-		game.customWindow.x = Math.floor(Number(com2[0]));
-		game.customWindow.y = Math.floor(Number(com2[1]));
-		}
-	}
-}
-*/

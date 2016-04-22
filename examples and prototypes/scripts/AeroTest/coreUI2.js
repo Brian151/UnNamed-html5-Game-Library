@@ -455,7 +455,7 @@ function Game() {
 						"g" : 16,
 						"b" : 16,
 					},
-					"opacity" : .6
+					"opacity" : .8
 				}
 			}
 		};
@@ -513,7 +513,7 @@ function Game() {
 				"img2" : "AeroOver",
 				"effects" : {
 					"aero" : true,
-					"opacity" : .6
+					"opacity" : .8
 				}
 			}
 		};
@@ -599,9 +599,6 @@ function Game() {
 		for (var i=0; i < this.uiPanes.length; i++) {
 			this.uiPanes[i].draw();
 		}
-		if(!checkNull(this.focusedUI) && this.focusedUI != null) {
-			this.focusedUI.draw();
-		}
 	}
 	
 	this.tick = function() {
@@ -619,7 +616,6 @@ function Game() {
 		for (var i=this.uiPanes.length-1; i >= 0; i--) {
 			this.uiPanes[i].tick();
 		}
-		
 		
 		//only hapens during "play" or "menu" game states:
 		if(this.state == "play"){

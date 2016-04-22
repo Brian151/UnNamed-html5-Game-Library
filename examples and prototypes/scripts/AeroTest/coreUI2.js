@@ -167,6 +167,7 @@ function GraphicsHandler(canvas) {
 		var effects = effectData;
 		var eff_gray = effects.grayscale;
 		var eff_color = effects.colorize;
+		var eff_colorP = effects.colorPal;
 		var eff_opacity = effects.opacity;
 		var srcImg = img;
 		var overlayImg = img2;
@@ -177,6 +178,7 @@ function GraphicsHandler(canvas) {
 		var imgData = tempContext.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
 		if (eff_gray) console.log("grayscale effect enabled!");
 		if (eff_color) console.log("colorize effect enabled!");
+		if (eff_color) console.log("color palette effect enabled!");
 		if (eff_opacity) console.log("opacity effect enabled!");
 		for (var i=0; i < imgData.data.length; i += 4) {
 			if (eff_gray) {
@@ -190,6 +192,11 @@ function GraphicsHandler(canvas) {
 				imgData.data[i] = colorMultiply(imgData.data[i],eff_color.r);
 				imgData.data[i+1] = colorMultiply(imgData.data[i+1],eff_color.g);
 				imgData.data[i+2] = colorMultiply(imgData.data[i+2],eff_color.b);
+			}
+			if(eff_colorP) {
+				imgData.data[i] = eff_colorP.r;
+				imgData.data[i+1] = eff_colorP.g;
+				imgData.data[i+2] = eff_colorP.b;
 			}
 		}
 		tempContext.putImageData(imgData,0,0);
@@ -268,8 +275,9 @@ function s9(parent,x,y,w,h,sliceData){
 	if (sliceData.effects.aero) {
 		this.aero = true;
 		this.aeroImage = GameObjs.assets.requestAsset("AeroBG");
+		if (sliceData.effects.aero2600) this.aeroImage = GameObjs.assets.requestAsset("AeroBG-atari")
 	}
-	if (sliceData.effects.grayscale || sliceData.effects.colorize || sliceData.effects.opacity) {
+	if (sliceData.effects.grayscale || sliceData.effects.colorize || sliceData.effects.opacity || sliceData.effects.colorPal) {
 		this.img2 = GameObjs.assets.requestAsset(sliceData.img2);
 		this.img = GameObjs.renderer.skinEffects(this.img,this.img2,sliceData.effects);
 	}
@@ -307,7 +315,7 @@ function s9(parent,x,y,w,h,sliceData){
 			GameObjs.renderer.drawClippedImage(this.img,this.x - tl.width,this.y - tl.height,tl.width,tl.height,tl.x,tl.y);
 			//this.drawClippedImage = function(img,x,y,w,h,ix,iy)
 			GameObjs.renderer.drawClippedImage(this.img,this.x,this.y - t.height,this.width,t.height,t.x,t.y,t.width,t.height);
-			if (this.aero) GameObjs.renderer.drawClippedImage(this.aeroImage,this.x,this.y - t.height,this.width,t.height,this.x,this.y - t.height);
+			if (this.aero) GameObjs.renderer.drawClippedImage(this.aeroImage,this.x,this.y - (t.height - 2),this.width,t.height - 4,this.x,this.y - (t.height - 2));
 			GameObjs.renderer.drawClippedImage(this.img,this.x + this.width,this.y - tr.height,tr.width,tr.height,tr.x,tr.y);
 			GameObjs.renderer.drawClippedImage(this.img,this.x - l.width,this.y,tl.width,this.height,l.x,l.y,l.width,l.height);
 			GameObjs.renderer.drawClippedImage(this.img,this.x + this.width,this.y,r.width,this.height,r.x,r.y,r.width,r.height);
@@ -388,6 +396,10 @@ function Game() {
 		this.assets.loadAsset("image","assets/UIgfx/Aero-gradient2.png","AeroBG");
 		this.assets.loadAsset("image","assets/UIgfx/AeroSkin.png","Aero");
 		this.assets.loadAsset("image","assets/UIgfx/AeroSkinOverlay.png","AeroOver");
+		this.assets.loadAsset("image","assets/UIgfx/Aero-gradient2-Atari2600.png","AeroBG-atari");
+		this.assets.loadAsset("image","assets/UIgfx/AeroSkin-Atari2600.png","Aero-atari");
+		this.assets.loadAsset("image","assets/UIgfx/AeroSkinOverlay-Atari2600.png","AeroOver-atari");
+		
 		var aeroSlices = {
 			"t" : 29,
 			"r" : 8,
@@ -582,10 +594,69 @@ function Game() {
 				}
 			}
 		};
-		UIFCNLinker.sayHi = function() {
-			alert("Hello, I am a linked function!");
-		}
-		UIDataLinker.theTxt = this.totalTicks;
+		
+		this.popupAeroTemplateA = {
+			"type" : "skinned_component",
+			"overflowX" : 0,
+			"overflowY" : 0,
+			"freePos" : true,
+			"background" : {
+				"color" : "#ECECEC"
+			},
+			"title" : {
+				"x" : -8,
+				"y" : -29,
+				"w" : 0,
+				"h" : 29,
+				"xO" : 16,
+				"yO" : 0,
+				"txt" : {
+					"x" : 0,
+					"y" : -8,
+					"txt" : "Aero Pane (Atari 2600 - color: #DCAC84)",
+					"align" : "center",
+					"font" : {
+						"w" : "bold",
+						"s" : "20px",
+						"f" : "Arial",
+						"c" : "#000000"
+					}
+				}
+			},
+			"rX" : {
+				"x" : 0,
+				"y" : 0,
+				"w" : 8,
+				"h" : 0,
+				"xO" : 0,
+				"yO" : 0,
+			},
+			"rY" : {
+				"x" : 0,
+				"y" : 0,
+				"w" : 0,
+				"h" : 8,
+				"xO" : 0,
+				"yO" : 0,
+			},
+			"debug" : false,
+			"skin" : {
+				"slice" : "slice-9",
+				"type" : "image",
+				"skin" : aeroSlices,
+				"img" : "Aero-atari",
+				"img2" : "AeroOver-atari",
+				"effects" : {
+					"aero" : true,
+					"aero2600" : true,
+					"colorPal" : {
+						"r" : 220,
+						"g" : 172,
+						"b" : 132
+					}
+				}
+			}
+		};
 		this.isUIManager = true;
 		this.hasFocusedUI = false;
 		this.focusedUI = null;
@@ -602,8 +673,6 @@ function Game() {
 	}
 	
 	this.tick = function() {
-		UIDataLinker.theTxt = this.totalTicks;
-		this.totalTicks++;
 		this.assets.tick();
 		if (this.state == "load"){
 			if(this.assets.queuecomplete) {
@@ -611,6 +680,7 @@ function Game() {
 				this.uiPanes.push(this.customWindow = new SkinnedUIComponent(this,10,50,500,200,this.popupAeroTemplate));
 				this.uiPanes.push(new SkinnedUIComponent(this,30,100,500,200,this.popupAeroTemplateD));
 				this.uiPanes.push(new SkinnedUIComponent(this,50,150,500,200,this.popupAeroTemplateP));
+				this.uiPanes.push(new SkinnedUIComponent(this,70,200,500,200,this.popupAeroTemplateA));
 			}
 		}
 		for (var i=this.uiPanes.length-1; i >= 0; i--) {

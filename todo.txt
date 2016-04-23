@@ -1,0 +1,17 @@
+add color palettes 
+-test with CAC sprites
+
+add loaderbars to UI stuff
+work more on UIManager object
+make UI buttons more customiz-able
+UI templates?
+skin varients?
+
+possible JS enumerator:
+function Enum(ids) {
+this.enums = 0;
+for (var i=0; i < ids.length; i++) {
+this[ids[i]] = this.emums;
+this.enums++;
+}
+}

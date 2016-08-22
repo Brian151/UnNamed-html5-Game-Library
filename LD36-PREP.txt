@@ -1,0 +1,20 @@
+re-structure
+impelment new and useful features derivived from other projects
+add debugging class
+add loading screen
+add versions
+onload event handlers for assets (in case same assets requested by multiple objects)
+onerror event handlers for assets (crash game, tell me why)
+queing assets, not just loading them immediately
+add system kill screen (game halts entirely and gives option for a dump, which is debugger's logs)
+run-time/on-demand generated/prepared assets (requires soome major re-writes to asset manager)
+start work on binary asset type
+address sprite class
+standardize some of the indev features
+fix major bugs with UI system
+upgrade UI system
+
+add namespace
+sprite upgrade idea...
+-effectively, for every sprite asset, only one sprite object is created
+-unsure of performance benefits, if any...

@@ -18,3 +18,19 @@ add namespace
 sprite upgrade idea...
 -effectively, for every sprite asset, only one sprite object is created
 -unsure of performance benefits, if any...
+
+game lib MAJOR update needed : 
+graphics handler pulling own weight
+graphics handler rendering to layers
+
+start merging vector drawing engine into graphics handler
+add phoria to game lib
+
+done:
+re-structure packages
+wip:
+graphics handler usefulness - adding native context 2D draw API calls
+vector engine - original codebase copied, but graphics handler needs all the native calls, first
+debug class - js file made
+overall report:
+horribly behind schedule, and very little of these tasks will be finished

@@ -25,12 +25,3 @@ Game.prototype.tick = function(){
 Game.prototype.draw = function(){
 	
 }
-
-var game = null;
-var loop = null;
-
-window.onload = function(){
-	game = new Game();
-	game.init("gameScreen");
-	loop = setInterval(function(){game.tick();},game.timing);
-}

@@ -57,3 +57,29 @@ GraphicsHandler.prototype.drawClippedImage = function(img,x,y,w,h,ix,iy,iw,ih){
 	//context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
 	//context.drawImage(img,ix,iy,w,h,x,y,w,h); //refs
 }
+//native draw call proxies (especially needed for vector engines)
+GraphicsHandler.prototype.beginPath() = function {
+	this.ctx.beginPath();
+}
+GraphicsHandler.prototype.closePath() = function {
+	this.ctx.closePath();
+}
+GraphicsHandler.prototype.fill() = function {
+	this.ctx.fill();
+}
+GraphicsHandler.prototype.stroke() = function {
+	this.ctx.stroke();
+}
+GraphicsHandler.prototype.moveTo(x,y) = function {
+	this.ctx.moveTo(x,y);
+}
+GraphicsHandler.prototype.lineTo(x,y) = function {
+	this.ctx.lineTo(x,y);
+}
+GraphicsHandler.prototype.quadraticCurveTo(cx,cy,dx,dy) = function {
+	this.ctx.quadraticCurveTo(cx,cy,dx,dy);
+}
+GraphicsHandler.prototype.arc = function(x,y,r,a1,a2,cc) {
+	this.ctx.arc(x,y,r,a1,a2,cc);
+}
+//still need many other functions... 

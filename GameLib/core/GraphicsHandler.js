@@ -13,7 +13,7 @@ var GraphicsHandler = function(canvas) {
 }
 //empty method, subject for removal
 GraphicsHandler.prototype.draw = function() {}
-this.preRenderPattern = function(src,w,h) {
+GraphicsHandler.prototype.preRenderPattern = function(src,w,h) {
 	console.log("pre-render pattern!");
 	var pat = this.pR.createPattern(src,"repeat");
 	var pw = this.pR.canvas.width;
@@ -24,7 +24,7 @@ this.preRenderPattern = function(src,w,h) {
 	var ht = Math.round(h);
 	var imgPat = this.pR.getImageData(0,0,wt,ht);
 	return imgPat;
-	}
+}
 GraphicsHandler.prototype.drawPattern = function (src,x,y,w,h,notFixed,preRendered) {
 	//console.log("PATTERN!");
 	var img = src;
@@ -79,7 +79,49 @@ GraphicsHandler.prototype.lineTo(x,y) = function {
 GraphicsHandler.prototype.quadraticCurveTo(cx,cy,dx,dy) = function {
 	this.ctx.quadraticCurveTo(cx,cy,dx,dy);
 }
+GraphicsHandler.prototype.bezierCurveTo(cx1,cy1,cx2,cy2,dx,dy) = function {
+	this.ctx.bezierCurveTo(cx1,cy1,cx2,cy2,dx,dy);
+}
 GraphicsHandler.prototype.arc = function(x,y,r,a1,a2,cc) {
 	this.ctx.arc(x,y,r,a1,a2,cc);
 }
-//still need many other functions... 
+GraphicsHandler.prototype.arcTo = function(x1,y1,x2,y2,r) {
+	this.ctx.arcTo(x1,y1,x2,y2,r);
+}
+GraphicsHandler.prototype.drawImage(img,x,y){
+	this.ctx.drawImage(img,x,y);
+}
+//also needs to create from source image data
+GraphicsHandler.prototype.createImageData = function(w,h) {
+	this.ctx.createImageData(w,h);
+}
+GraphicsHandler.prototype.getImageData = function(x,y,w,h) {
+	this.ctx.getImageData(x,y,w,h);
+}
+//more stuff to support...
+GraphicsHandler.prototype.putImageData = function(iDat,x,y) {
+	this.ctx.putImageData(iDat,x,y);
+}
+GraphicsHandler.prototype.rect = function(x,y,w,h) {
+	this.ctx.rect(x,y,w,h);
+}
+//add fill styles
+GraphicsHandler.prototype.fillRect = function(x,y,w,h) {
+	this.ctx.fillRect(x,y,w,h);
+}
+//add line styles
+GraphicsHandler.prototype.strokeRect = function(x,y,w,h) {
+	this.ctx.strokeRect(x,y,w,h);
+}
+GraphicsHandler.prototype.clearRect = function(x,y,w,h) {
+	this.ctx.clearRect(x,y,w,h);
+}
+//clearAll()
+//still WIP
+/* 
+future : 
+beginFill()
+endFill()
+conditional override of 'native' methods to push to queue or frame buffer
+(effectively, re-create parts (or all) of the Flash AS3 drawing API)
+*/

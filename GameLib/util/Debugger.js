@@ -20,7 +20,10 @@ Debugger.arrayToString = function(arr) {
 Debugger.stringArrayToString = function(arr) {
 	var arr2 = [];
 	for (var i=0; i < arr.length; i++) {
-		arr2.push("\"" + arr[i] + "\""));
+		//arr2.push("\"" + (arr[i]) + "\""));
+		var curr = arr[i];
+		var curr2 = "\"" + curr + "\"";
+		arr2.push(curr2);
 	}
 	var out = "String Array: [" + arr2.join(" , ") + "]";
 	return out;

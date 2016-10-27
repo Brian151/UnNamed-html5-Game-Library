@@ -1,4 +1,4 @@
-//possibly not always working!!!
+//not always working!!!
 function checkNull(value){
 	if (typeof value === "null" || typeof value === "undefined") {
 		return true;
@@ -6,3 +6,5 @@ function checkNull(value){
 		return false;
 	}
 }
+var DataTypes = new function(){}();
+DataTypes.checkNull = checkNull;

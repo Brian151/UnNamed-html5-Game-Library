@@ -58,28 +58,28 @@ GraphicsHandler.prototype.drawClippedImage = function(img,x,y,w,h,ix,iy,iw,ih){
 	//context.drawImage(img,ix,iy,w,h,x,y,w,h); //refs
 }
 //native draw call proxies (especially needed for vector engines)
-GraphicsHandler.prototype.beginPath() = function {
+GraphicsHandler.prototype.beginPath = function() {
 	this.ctx.beginPath();
 }
-GraphicsHandler.prototype.closePath() = function {
+GraphicsHandler.prototype.closePath = function() {
 	this.ctx.closePath();
 }
-GraphicsHandler.prototype.fill() = function {
+GraphicsHandler.prototype.fill = function() {
 	this.ctx.fill();
 }
-GraphicsHandler.prototype.stroke() = function {
+GraphicsHandler.prototype.stroke = function() {
 	this.ctx.stroke();
 }
-GraphicsHandler.prototype.moveTo(x,y) = function {
+GraphicsHandler.prototype.moveTo = function(x,y) {
 	this.ctx.moveTo(x,y);
 }
-GraphicsHandler.prototype.lineTo(x,y) = function {
+GraphicsHandler.prototype.lineTo = function(x,y) {
 	this.ctx.lineTo(x,y);
 }
-GraphicsHandler.prototype.quadraticCurveTo(cx,cy,dx,dy) = function {
+GraphicsHandler.prototype.quadraticCurveTo = function(cx,cy,dx,dy) {
 	this.ctx.quadraticCurveTo(cx,cy,dx,dy);
 }
-GraphicsHandler.prototype.bezierCurveTo(cx1,cy1,cx2,cy2,dx,dy) = function {
+GraphicsHandler.prototype.bezierCurveTo = function(cx1,cy1,cx2,cy2,dx,dy) {
 	this.ctx.bezierCurveTo(cx1,cy1,cx2,cy2,dx,dy);
 }
 GraphicsHandler.prototype.arc = function(x,y,r,a1,a2,cc) {
@@ -88,7 +88,7 @@ GraphicsHandler.prototype.arc = function(x,y,r,a1,a2,cc) {
 GraphicsHandler.prototype.arcTo = function(x1,y1,x2,y2,r) {
 	this.ctx.arcTo(x1,y1,x2,y2,r);
 }
-GraphicsHandler.prototype.drawImage(img,x,y){
+GraphicsHandler.prototype.drawImage = function(img,x,y){
 	this.ctx.drawImage(img,x,y);
 }
 //also needs to create from source image data

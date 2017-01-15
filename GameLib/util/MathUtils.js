@@ -72,3 +72,27 @@ MathUtils.cycleValues = function(value,shift,min,max) {
 	}
 	return out;
 }
+MathUtils.clampAngle = function(a,include360) {
+	var out = a;
+	if (a >= 360) {
+		out = a - (Math.floor(a/360) * 360);
+	} else if (a < 0) {
+		if (a <= -360) {
+			out = a - (Math.floor(a/360) * 360);
+		} else {
+			out += 360;
+		}
+	}
+	if (include360) {
+		if (a == 360 || a == -360) return a;
+	}
+	return out;
+}
+MathUtils.getDelta = function(a,b){
+	var n = (a > b)
+	if (n) {
+		return (a - b) * -1
+	} else {
+		return (b - a);
+	}
+}

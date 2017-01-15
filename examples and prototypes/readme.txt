@@ -78,3 +78,15 @@ Other notes:
 1. The official in-library name of this UI effect is undecided.
 2. Until feature is completed, it is not an official feature of
 the UI API in my game library, sorry.
+
+tech demo 7 :
+Purpose: 
+1] test progress meter classes
+2] test dynamic script loading via the script importer util
+directory: 0_7_0
+notes: 
+not runnable as-is. Keeping different versions of the library 
+in the demo directory would start taking up a lot of space.
+Should work with any version of the library 0.7.0 and up.
+This will change in the future as I standardize other features,
+thus the other tech demos start using the same exact library code.

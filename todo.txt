@@ -1,5 +1,5 @@
-add color palettes 
--test with CAC sprites
+add color palettes [x]
+-test with CAC sprites[x]
 
 add loaderbars to UI stuff
 work more on UIManager object
@@ -15,3 +15,11 @@ this[ids[i]] = this.emums;
 this.enums++;
 }
 }
+
+move color palette code to GraphicsUtils
+tweak and implement BitmapGenerator in GraphicsUtils
+just in general, move/add certain graphics effects to GraphicsUtils
+
+phase-out anonymous checkNull function
++replace with DataTypes, checkNull the becomes a method of that class
++implement better type checking, current leaves a lot to be desired (or rather, JS does...)

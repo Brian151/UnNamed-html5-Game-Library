@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<style type="text/css">
+			canvas{
+				border: 3px solid black;
+			}
+			h4 {
+				margin: 2px;
+			}
+			#instruct{
+				font-weight:bold;
+			}
+		</style>
+		<title>Quality Cat Game Library - LOAD SCREEN TEST</title>
+		<meta name="description" content="HTML5 SLICE-9 TEST 1">
+		<meta name="author" content="ETXAlienRobot201">
+		<meta name="organization" content="Crystalien Redux Project">
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<canvas id="gameScreen" width="600" height="400">Your browser doesn't support HTML5 Canvas!!!</canvas>
+		<!-- 
+		These are now impoted via JS, 
+		but we will need the onload and onerror handlers soon!
+		<script src="GameLib/core/GraphicsHandler.js"></script>
+		<script src="GameLib/core/Game.js"></script>
+		<script src="GameLib/util/loadMeter/LoadMeter.js"></script>
+		<script src="GameLib/util/loadMeter/ClassicLoadingMeter.js"></script>
+		<script src="GameLib/util/MathUtils.js"></script>
+		<script src="GameLib/util/loadMeter/DonutLoadingMeter.js"></script>
+		<script src="GameLib/util/loadMeter/BufferingMeter.js"></script>
+		<script src="MyGame.js"></script>
+		<script src="MainApp.js"></script>-->
+		<script src="GameLib/util/ScriptImportUtil.js"></script>
+		<div id="scripts" style="display:none;"></div>
+		<script>
+			var imports = [
+			"GameLib.core.GraphicsHandler",
+			"GameLib.core.Game",
+			"GameLib.util.loadMeter.LoadMeter",
+			"GameLib.util.loadMeter.ClassicLoadingMeter",
+			"GameLib.util.MathUtils",
+			"GameLib.util.loadMeter.DonutLoadingMeter",
+			"GameLib.util.loadMeter.BufferingMeter",
+			"MyGame",
+			"MainApp",
+			"GameLib.util.QueryStringParser"
+			].join("\n");
+			ScriptImportUtil.importFromList(imports);
+		</script>
+		<canvas id="screenP" style="display:none" width="600" height="400">Your browser doesn't support HTML5 Canvas!!!</canvas>
+		</div>
+	</body>
+</html>

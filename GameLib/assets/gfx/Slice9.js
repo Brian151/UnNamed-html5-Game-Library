@@ -1,15 +1,15 @@
-var s9 = function(parent,x,y,w,h,sliceData){
+var Slice9 = function(parent,x,y,w,h,sliceData){
 	this.parent = parent;
 	//console.log(img);
 	if(sliceData.type == "image"){
 		this.isImageSlice = true;
 		this.img = GameObjs.assets.requestAsset(sliceData.img);
-		this.sliceData = slice9(this.img.width,this.img.height,sliceData.skin.t,sliceData.skin.r,sliceData.skin.b,sliceData.skin.l);
+		this.createSliceRegions(this.img.width,this.img.height,{top:sliceData.skin.t,right:sliceData.skin.r,bottom:sliceData.skin.b,left:sliceData.skin.l});
 	} else if (sliceData.type == "color") {
 		this.color = sliceData.color;
 		var tempW = sliceData.w;
 		var tempH = sliceData.h;
-		this.sliceData = slice9(tempW,tempH,sliceData.skin.t,sliceData.skin.r,sliceData.skin.b,sliceData.skin.l);
+		this.createSliceRegions(tempW,tempH,{top:sliceData.skin.t,right:sliceData.skin.r,bottom:sliceData.skin.b,left:sliceData.skin.l});
 	}
 	//this.parent.renderer.ctx.drawImage(this.img,0,0);
 	this.x = x;
@@ -26,8 +26,8 @@ var s9 = function(parent,x,y,w,h,sliceData){
 	this.minW = this.sliceData.middle.minW;
 	this.minH = this.sliceData.middle.minH;
 }
-s9.prototype.tick = function(){} //placeholder, subject for removal
-s9.prototype.draw = function(){
+Slice9.prototype.tick = function(){} //placeholder, subject for removal
+Slice9.prototype.draw = function(){
 	//var tcol = this.parent.renderer.ctx.fillStyle;
 	//this.parent.renderer.ctx.fillStyle = this.color;
 	//this.parent.renderer.ctx.fillRect(this.x-3,this.y,this.width+6,this.height);
@@ -71,4 +71,37 @@ s9.prototype.draw = function(){
 		GameObjs.renderer.ctx.fillRect(this.x + this.width,this.y + this.height,br.width,br.height);
 		GameObjs.renderer.ctx.fillStyle = tempCol;
 	}
+}
+Slice9.prototype.createSliceRegions = function(width,height,margins) {
+	var w1 = width - 1;
+	var h1 = height - 1;
+	var top = margins.top;
+	var right = margins.right;
+	var bottom = margins.bottom;
+	var left = margins.left;
+	var t1 = top - 1;
+	var r1 = right - 1;
+	var b1 = bottom - 1;
+	var l1 = left -1;
+	var slices = {};
+	slices["topLeft"] = new SliceRegion(0,0,left,top,true,true);
+	slices["topRight"] = new SliceRegion(w1 - r1,0,right,top,true,true);
+	slices["bottomRight"] = new SliceRegion(w1 - r1,h1 - b1,right,bot,true,true);
+	slices["bottomLeft"] = new SliceRegion(0,h1 - b1,left,bot,true,true);
+	var sW = (w1 - right) - l1;
+	slices["top"] = new SliceRegion(left,0,sW,top,false,true);
+	slices["bottom"] = new SliceRegion(left,h1 - b1,sW,bot,false,true);
+	var sH = (h1 - bot) - t1;
+	slices["left"] = new SliceRegion(0,top,left,sH,true,false);
+	slices["right"] = new SliceRegion(w1 - r1,top,right,sH,true,false);
+	slices["middle"] = new SliceRegion(left,top,sW,sH,false,false);
+	this.sliceData = slices;
+}
+var SliceRegion = function(x,y,width,height,lockWidth,lockHeight) {
+	this.x = x;
+	this.y = y;
+	this.width = width;
+	this.height = height;
+	this.lockW = lockWidth;
+	this.lockH = lockHeight;
 }

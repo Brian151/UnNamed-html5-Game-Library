@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<style type="text/css">
+			canvas{
+				border: 3px solid black;
+			}
+			h4 {
+				margin: 2px;
+			}
+			#instruct{
+				font-weight:bold;
+			}
+		</style>
+		<title>Quality Cat Game Library - Version Checker Test</title>
+		<meta name="description" content="QualityCat Game Library - Version Checker Test">
+		<meta name="author" content="Brian151">
+		<meta name="organization" content="Quality Cat Games">
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<script src="GameLib/util/VersionChecker.js" onload="VersionChecker.checkForUpdate();VersionChecker.displayCurrentBuildInfo();VersionChecker.showReleaseNotes('both');"></script>
+		<div id="instruct">
+		view web console
+		</div>
+	</body>
+</html>

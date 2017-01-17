@@ -1,13 +1,13 @@
-var ClassicLoaderBar = function(game,x,y,width,height,colors) {
-	PreloadScreen.call(this,game,x,y,colors);
+var ClassicProgressBar = function(game,x,y,width,height,colors) {
+	ProgressMeter.call(this,game,x,y,colors);
 	this.width = width;
 	this.height = height;
 	this.width2 = Math.floor(this.width / 2);
 	this.height2 = Math.floor(this.height / 2);
 }
-ClassicLoaderBar.prototype = Object.create(PreloadScreen.prototype);
-ClassicLoaderBar.constructor = ClassicLoaderBar;
-ClassicLoaderBar.prototype.draw = function() {
+ClassicProgressBar.prototype = Object.create(ProgressMeter.prototype);
+ClassicProgressBar.constructor = ClassicLoaderBar;
+ClassicProgressBar.prototype.draw = function() {
 	this.parent.graphics.ctx.lineWidth = 3;
 	this.parent.graphics.ctx.fillStyle = this.colorBG;
 	this.parent.graphics.fillRect(this.center.x - this.width2,this.center.y - this.height2,this.width,this.height);

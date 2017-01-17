@@ -90,3 +90,10 @@ in the demo directory would start taking up a lot of space.
 Should work with any version of the library 0.7.0 and up.
 This will change in the future as I standardize other features,
 thus the other tech demos start using the same exact library code.
+
+tech demo 8 :
+Purpose:
+Test version-checking class
+file : VersionCheck.html
+notes:
+same as 7

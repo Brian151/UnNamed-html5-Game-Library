@@ -1,11 +1,11 @@
-var DonutLoader = function(game,x,y,radius,thickness,colors) {
-	PreloadScreen.call(this,game,x,y,colors);
+var DonutMeter = function(game,x,y,radius,thickness,colors) {
+	ProgressMeter.call(this,game,x,y,colors);
 	this.radius = radius;
 	this.thickness = thickness;
 }
-DonutLoader.prototype = Object.create(PreloadScreen.prototype);
-DonutLoader.constructor = DonutLoader;
-DonutLoader.prototype.draw = function() {
+DonutMeter.prototype = Object.create(ProgressMeter.prototype);
+DonutMeter.constructor = DonutMeter;
+DonutMeter.prototype.draw = function() {
 	this.parent.graphics.ctx.fillStyle = this.colorFG;
 	var angleStart = MathUtils.radians(270);
 	var aTemp = Math.round(this.totalProgress * 360);

@@ -1,5 +1,5 @@
-var BufferingScreen = function(game,x,y,radius,thickness,colors,config) {
-	PreloadScreen.call(this,game,x,y,colors);
+var BufferingMeter = function(game,x,y,radius,thickness,colors,config) {
+	ProgressMeter.call(this,game,x,y,colors);
 	this.radius = radius;
 	this.thickness = thickness;
 	
@@ -13,12 +13,12 @@ var BufferingScreen = function(game,x,y,radius,thickness,colors,config) {
 	
 	
 }
-BufferingScreen.prototype = Object.create(PreloadScreen.prototype);
-BufferingScreen.constructor = ClassicLoaderBar;
-BufferingScreen.prototype.tick = function() {
+BufferingMeter.prototype = Object.create(ProgressMeter.prototype);
+BufferingMeter.constructor = ClassicLoaderBar;
+BufferingMeter.prototype.tick = function() {
 	this.angle = MathUtils.clampAngle(this.angle += this.increment);
 }
-BufferingScreen.prototype.draw = function() {
+BufferingMeter.prototype.draw = function() {
 	this.parent.graphics.ctx.fillStyle = this.colorFG;
 	var angle2 = MathUtils.radians(MathUtils.clampAngle(this.startAngle + this.angle));
 	for (var i=0; i < this.totalChilds; i++) {

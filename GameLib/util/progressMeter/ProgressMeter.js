@@ -1,4 +1,4 @@
-var PreloadScreen = function(game,x,y,colors) {
+var ProgressMeter = function(game,x,y,colors) {
 	this.parent = game;
 	this.center = {x:x,y:y};
 	this.msg = 0;
@@ -6,19 +6,19 @@ var PreloadScreen = function(game,x,y,colors) {
 	this.colorFG = colors.c2 || "#0077ff";
 	this.colorBorder = colors.c3 || "#333333";
 }
-PreloadScreen.prototype.syncTo = function(target,progress,complete) {
+ProgressMeter.prototype.syncTo = function(target,progress,complete) {
 	this.sycned = true;
 	this.target = target;
 	this.stats = [progress,complete];
 }
-PreloadScreen.prototype.tick = function() {
+ProgressMeter.prototype.tick = function() {
 	if (this.sycned) {
 		this.totalProgress = (this.target[this.stats[0]] / this.target[this.stats[1]]);
 		if(this.totalProgress > 1) this.totalProgress = 1;
 		this.msg = this.totalProgress;
 	}
 }
-PreloadScreen.prototype.draw = function() {
+ProgressMeter.prototype.draw = function() {
 	this.parent.graphics.ctx.fillStyle = this.colorFG;
 	this.parent.graphics.ctx.strokeStyle = this.colorBorder;
 	this.parent.graphics.ctx.lineWidth = 3;

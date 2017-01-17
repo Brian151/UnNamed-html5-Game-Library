@@ -1,13 +1,49 @@
 add color palettes [x]
 -test with CAC sprites[x]
 DOCUMENTATION!!! []
+re-structure packages [x]
+move color palette code to ImageUtils []
+tweak and implement BitmapGenerator in ImageUtils []
 
-add loaderbars to UI stuff
-work more on UIManager object
-make UI buttons more customiz-able
-UI templates?
-skin varients?
+wip:
+graphics handler usefulness - adding native context 2D draw API calls []
+vector engine []
+just in general, move/add certain graphics effects to ImageUtils and ColorUtils []
+debug class []
+add loaderbars to UI stuff []
+work more on UIManager object []
+make UI buttons more customiz-able []
+UI templates? []
+skin varients? []
 
+phase-out anonymous checkNull function
++replace with DataTypes, checkNull the becomes a method of that class
++implement better type checking, current leaves a lot to be desired (or rather, JS does...)
+ 
+/*temp*/
+
+impelment new and useful features derivived from other projects
+add loading screen
+onload event handlers for assets (in case same assets requested by multiple objects)
+onerror event handlers for assets (crash game, tell me why)
+queing assets, not just loading them immediately
+add system kill screen (game halts entirely and gives option for a dump, which is debugger's logs)
+run-time/on-demand generated/prepared assets (requires soome major re-writes to asset manager)
+start work on binary asset type
+address sprite class
+standardize some of the indev features
+fix major bugs with UI system
+upgrade UI system
+add namespace
+sprite upgrade idea...
+-effectively, for every sprite asset, only one sprite object is created
+-unsure of performance benefits, if any...
+graphics handler rendering to layers
+
+possibly canned:
+add phoria to game lib
+
+ //snips
 possible JS enumerator:
 function Enum(ids) {
 this.enums = 0;
@@ -16,11 +52,3 @@ this[ids[i]] = this.emums;
 this.enums++;
 }
 }
-
-move color palette code to GraphicsUtils
-tweak and implement BitmapGenerator in GraphicsUtils
-just in general, move/add certain graphics effects to GraphicsUtils
-
-phase-out anonymous checkNull function
-+replace with DataTypes, checkNull the becomes a method of that class
-+implement better type checking, current leaves a lot to be desired (or rather, JS does...)

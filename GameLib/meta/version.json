@@ -2,15 +2,15 @@
 	"name" : "Quality Cat Game Library",
 	"major" : 0,
 	"minor" : 7,
-	"revision" : 0,
+	"revision" : 1,
 	"releaseType" : "indev-alpha",
 	"platform" : "HTML5",
 	"releaseNotes" : [
-		"Added version checker (partly, not yet linked to master repo)",
-		"Added progress meters (WIP, only easily useful for loading screens right now)",
-		"Started adding flash-like vector graphics API",
-		"Added query string parser (lazy implementation currently)",
-		"Added script importer (doesn't yet handle onLoad() or onError()!)",
-		"Added color utilities class (WIP, there's more to come)"
+		"Fixed typos in Slice9 and the Preloader classes/directory",
+		"VersionChecker is now actually able to do something (It's still not complete, though...)",
+		"[Non-critical] re-named gl_list to gamelib_list",
+		"[Non-critical] deleted gfx.json, as it's from another project (asteroids 2600 clone)",
+		"[Non-critical] merged LD36-PREP.txt into todo.txt, re-organized/updated todo.txt partially",
+		"[Non-critical] updated gamelib_list, added the batch file that generates it",
 	]
 }

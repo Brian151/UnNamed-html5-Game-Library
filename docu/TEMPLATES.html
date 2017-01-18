@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Quality Cat Game Library - Documentation</title>
+		<link rel="stylesheet" href="STYLES/global.css" type="text/css"/>
+	</head>
+	<body>
+		<table border="0" id="wrapper">
+			<tr>
+				<th class="miniWrapper" style="height:64px;" colspan="2">Quality Cat Game Library - documentation</th>
+			</tr>
+			<tr>
+				<td class="miniWrapper" style="width:30%;" id="nav">
+					<h4>
+						Library
+					</h4>
+					<ul id="navList">
+						<li class="navItem"><a href="INDEX.html">Documentation - Index</a></li>
+						<li class="navItem"><a href="ABOUT.html">About</a></li>
+						<li class="navItem"><a href="TEMPLATES.html">Template Classes</a></li>
+						<li class="navItem"><a href="pkg_core.html">core</a></li>
+					</ul>
+				</td>
+				<td class="miniWrapper" id="content">
+					<h4>
+						Template Classes
+					</h4>
+					<p>
+						These two classes are pre-fabricated to streamline the creation of a basic game.
+					</p>
+					<h4>
+						MainApp
+					</h4>
+					<p>
+						This class is responsible for loading and launching the game. Code containing
+						the basic loading and startup functions for a game would be put here. 
+						(as to be expected from the Main class) In some cases, this may also control 
+						some of the logic of your game while it's running. This pre-configured 'Main' class 
+						creates a new MyGame, and sets it to run at 30 FPS, give or take, since JS is actually 
+						pretty unreliable for timing consistency. It then creates an interval at the approximate 
+						timing for the game's FPS, which is effectively the main game loop.
+					</p>
+					<h4>
+						MyGame
+					</h4>
+					<p>
+						This class extends core.Game. It is pre-configured to bind to a canvas with the id 
+						'screen' and creates a GraphicsHandler, InputManager ,and an AssetManager with the
+						IDs 'renderer' , 'controller', and 'assets' , respectively.
+					</p>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

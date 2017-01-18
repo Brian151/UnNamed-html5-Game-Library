@@ -1,3 +1,16 @@
+/*
+The majority of the color compositing operatings are derived from the formulas show here:
+https://docs.gimp.org/en/gimp-concepts-layer-modes.html
+
+transform() is based off Adobe's Flash.geom.ColorTransform object/API
+http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/geom/ColorTransform.html
+However, my implementation does not limit the multipliers to the range 0.0 - 1.0 ,
+which I feel allows a fair bit more flexibility.
+
+The brightness() method is derived from this tutorial:
+http://www.html5canvastutorials.com/advanced/html5-canvas-grayscale-image-colors-tutorial/
+(WARNING! annoying automatic re-loads)
+*/
 var ColorUtils = new function() {}();
 ColorUtils.rgba = function(rgbaArray) {
 	var temp = rgbaArray;

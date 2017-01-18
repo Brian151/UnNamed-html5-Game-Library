@@ -1,0 +1,34 @@
+Applies to all files in assets/
+
+[root]
+RainbowThing.png : base - Celestek team #HexCraft
+RainbowAnimation.json : public domain
+test.json : public domain
+
+[/UIGfx]
+Aero-gradient2.png : Microsoft
+Aero-gradient-Atari2600.png : base - Microsoft
+AeroSkin.png : Microsoft
+AeroSkinAtari2600 : base - Microsoft
+AeroSkinOverlay.png : Microsoft
+HexCraft-icy.png : base - Celestek team #HexCraft
+Luna-Ice.png: base - Microsoft
+win8-CAC_REDUX.PNG : base - Microsoft
+
+[/pal_test]
+BH_good_03.png : 4t2 Multimedia, LEGO #CAC
+BH_good_pal.png : public domain #pals
+BH_good_pal2.png : public domain #pals
+UF_evil_straight-08.png : 4t2 Multimedia, LEGO #CAC
+
+references & notes:
+#HexCraft : 
+https://github.com/CelesTek-Team/HexCraft
+https://github.com/CelesTek-Team/HexCraft/blob/master/main/resources/assets/hexcraft/textures/blocks/glow.png
+Licensed under Creative Commons Attribution-NonCommercial 4.0 International license, as per
+https://github.com/CelesTek-Team/HexCraft/blob/master/LICENSE
+#CAC :
+http://4t2.ca/portfolio/legmam/
+#pals : I cannot morally/ethically justify patented/copyrighted 
+colors and color schemes. Also, there's no known ownership over
+any of the provided examples.

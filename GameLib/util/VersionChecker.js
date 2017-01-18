@@ -9,7 +9,7 @@ var VersionChecker = new function() {
 		name : "Quality Cat Game Library",
 		major : 0,
 		minor : 7,
-		revision : 1,
+		revision : 2,
 		releaseType : "indev-alpha",
 		platform : "HTML5"
 	};

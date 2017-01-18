@@ -1,5 +1,6 @@
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\assets
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\core
+C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\gamelib_list.txt
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\gl_list.txt
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\MainApp.js
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\meta
@@ -39,6 +40,7 @@ C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameL
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\util\progressMeter\ClassicProgressBar.js
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\util\progressMeter\DonutMeter.js
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\util\progressMeter\ProgressMeter.js
+C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\util\vector\importMe01.html
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\util\vector\planned_maybe.txt
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\util\vector\VectorPrefabGenerator.js
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\__mergeIn__\brokecol.js
@@ -47,7 +49,6 @@ C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameL
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\__mergeIn__\justRef
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\__mergeIn__\READ.txt
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\__mergeIn__\SBZ
-C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\__mergeIn__\shapes.html
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\__mergeIn__\tryit-colordepth.html
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\__mergeIn__\justRef\OOP.js
 C:\Documents and Settings\florist\Desktop\PMD Tiles\gitstuff\GameLibMaster\GameLib\__mergeIn__\SBZ\AssetManager.js

@@ -1,3 +1,8 @@
+/*
+implementation derived from :
+http://stackoverflow.com/a/950146
+More specifically, "Dynamic Script Loading" , as the whole point is to NOT have JQuery's overhead
+*/
 var ScriptImportUtil = new function(){}();
 ScriptImportUtil.importScript = function(strImport) {
 	var temp = strImport.split(".");

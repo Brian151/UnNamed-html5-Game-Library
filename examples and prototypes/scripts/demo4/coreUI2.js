@@ -334,7 +334,7 @@ function Game() {
 		this.running = true;
 		this.uiPanes = [];
 		this.totalTicks = 0;
-		this.assets.loadAsset("image","assets/UIgfx/Luna-Ice.png","LunaIce");
+		this.assets.loadAsset("image","assets/UIgfx/HexCraft-icy.png","LunaIce");
 		this.assets.loadAsset("image","assets/UIgfx/Luna-IceBG.png","LunaIceBG");
 		this.assets.loadAsset("image","assets/UIgfx/win8-CAC_REDUX.png","Win8CAC");
 		var lunaSlices = {

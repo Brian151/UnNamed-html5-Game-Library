@@ -1,5 +1,6 @@
 /*global linker if something needs direct access to say, the AssetManager
-(hint: sprites need stuff from an asset library!!!) */
+(hint: sprites need stuff from an asset library!!!) 
+Due to be phased-out*/
 var GameObjs = {};
 
 var Game = function() {

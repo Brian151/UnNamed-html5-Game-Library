@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Quality Cat Game Library - Documentation</title>
+		<link rel="stylesheet" href="STYLES/global.css" type="text/css"/>
+	</head>
+	<body>
+		<table border="0" id="wrapper">
+			<tr>
+				<th class="miniWrapper" style="height:64px;" colspan="2">Quality Cat Game Library - documentation</th>
+			</tr>
+			<tr>
+				<td class="miniWrapper" style="width:30%;" id="nav">
+					<h4>
+						Library
+					</h4>
+					<ul id="navList">
+						<li class="navItem"><a href="INDEX.html">Documentation - Index</a></li>
+						<li class="navItem"><a href="ABOUT.html">About</a></li>
+						<li class="navItem"><a href="TEMPLATES.html">Templates</a></li>
+						<li class="navItem"><a href="pkg_core.html">core</a></li>
+					</ul>
+				</td>
+				<td class="miniWrapper" id="content">
+					<h4>
+						core.AssetManager
+					</h4>
+					<p>
+						loads and internally caches assets
+					</p>
+					<h4>
+						properties
+					</h4>
+					<ul>
+						<li>imgs:Object, cache for Image objects</li>
+						<li>snds:Object, cache for Sound objects (not implemented yet)</li>
+						<li>txts:Object, cache for Strings loaded from text-formatted files</li>
+						<li>pendingTexts:Array, internal buffer/queue of XHRs for text assets</li>
+						<li>assetCounter:Number, total assets queued</li>
+						<li>assetsLoaded:Number, total assets that actually loaded</li>
+						<li>queueCompete:Boolean, only true if all assets have been loaded</li>
+						<li>assetsPath:String, the base URL to load assets from</li>
+					</ul>
+					<h4>
+						methods
+					</h4>
+					<ul>
+						<li>onAssetLoaded():void, callback function for when an asset loaded, increments
+						assetsLoaded</li>
+						<li>onXMLHTTPLoaded(id,pendingXMLHTTP,text):void, callback function for when an XHR
+						has successfully loaded, adds the response text to the txt cache with
+						an id of id, and removes the completed XHR from the XHR queue array</li>
+						<li>loadAsset(type,path,id):void, attempts to load an asset of type:type,
+						from path:path, and caches it as id:id, only supports types "image" and "txt"</li>
+						<li>tick():void, update/tick method, updates queueComplete</li>
+						<li>requestAsset(type,ID):Image/String, attempts to fetch an asset from one
+						of the internal caches, returns undefined by default.</li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

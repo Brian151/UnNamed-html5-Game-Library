@@ -9,9 +9,10 @@
 	"cutFrames" : [9,10,11],
 	"labels" : [{"name":"rainbow","i":0,"e":5},{"name":"blueToWhite","i":6,"e":8},{"name":"redSat","i":9,"e":14}],
 	"timings" : {
-		"rainbow" : 10,
-		"blueToWhite" : 15,
-		"redSat": 5
+		"rainbow" : [10,6],
+		"blueToWhite" : [15,9],
+		"redSat": [5,6]
 	},
-	"timing" : 30
+	"timing" : [30,0.5],
+	"timingMode" : 1
 }

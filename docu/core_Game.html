@@ -24,22 +24,28 @@
 				</td>
 				<td class="miniWrapper" id="content">
 					<h4>
-						core
+						core.Game
 					</h4>
 					<p>
-						Contains the classes forming the bare-bone nessessities for making a game. If any
-						part of this library can be considered an 'engine', the core package would be it.
+						A basic game class
 					</p>
 					<h4>
-						Classes
+						properties
 					</h4>
 					<ul>
-						<li>Game</li>
-						<li>InputManager</li>
-						<li>AssetManager</li>
-						<li>GraphicsHandler</li>
-						<li>VectorEngine</li>
-						<li>SoundSystem</li>
+						<li>state:String, the current state, defaults to "standby"</li>
+						<li>timing:Number, the timing/framerate, defaults to 33, measured in milliseconds</li>
+					</ul>
+					<h4>
+						methods
+					</h4>
+					<ul>
+						<li>Game():Game, constructor</li>
+						<li>setFPS(fps):void, sets the timing property to 1000/fps and rounds it to the nearest integer</li>
+						<li>init(canvasID):void, sets state to "initalize" and grabs the canvas with ID canvasID and adds that as the
+						canvas property</li>
+						<li>tick():void, update/tick method, empty by default</li>
+						<li>draw():void, draw/render method, empty by default</li>
 					</ul>
 				</td>
 			</tr>

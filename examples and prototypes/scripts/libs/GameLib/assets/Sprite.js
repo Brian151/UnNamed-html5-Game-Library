@@ -8,24 +8,41 @@ var Sprite = function(x,y,img,animationData) {
 	this.stopped = false;
 	this.constrained = false;
 	this.timer = 0;
-	this.timing = this.animationData.timing;
+	this.tMode = this.animationData.timingMode;
+	this.timing = this.animationData.timing[this.tMode];
+	this.frameMin = 0;
+	this.frameMax = this.animationData.length - 1;
+	this.rate = 1000 / this.timing;
+	this.deltaTime = 0;
+	this.timeNow = Date.now();
+	this.timeLast = this.timeNow;
 }
 Sprite.prototype.tick = function() {
 	//this.findCurrentLabel();
-	var minFrame = 0;
-	var maxFrame = this.animationData.length - 1;
-	if(this.constrained) {
-		minFrame = this.currLabel.i;
-		maxFrame = this.currLabel.e;
-	}
 	if(!this.stopped){
-		if(!(this.timer % this.timing) && this.timer != 0) {
-			this.currFrame++;
-			if (this.currFrame == (maxFrame + 1)) this.currFrame = minFrame;
-			this.timer = 0;
-			//console.log(this.currFrame);
+		switch(this.tMode) {
+			case 0:
+				if(!(this.timer % this.timing) && this.timer != 0) {
+					this.currFrame++;
+					if (this.currFrame == (this.frameMax + 1)) this.currFrame = this.frameMin;
+					this.timer = 0;
+					//console.log(this.currFrame);
+				}
+				this.timer++;
+				//console.log(this.timeLast);
+				break;
+			case 1: 
+				this.timeNow = Date.now();
+				this.deltaTime += (this.timeNow - this.timeLast) / this.rate;
+				this.timeLast = this.timeNow;
+				if (this.deltaTime >= 1) {
+					this.deltaTime = 0;
+					this.currFrame++;
+					if (this.currFrame == (this.frameMax + 1)) this.currFrame = this.frameMin;
+				//console.log(this.deltaTime);
+				}
+				break;
 		}
-		this.timer++;
 	}
 }
 Sprite.prototype.draw = function(){
@@ -69,7 +86,6 @@ Sprite.prototype.gotoAndPlay = function(frame) {
 and also because the Sprite object uses spritesheets, raising
 some questions how this implementation should work exactly*/
 Sprite.prototype.gotoAndPlayWithin = function(frame) {
-	this.constrained = true;
 	this.stopped = false;
 	var foundLabel = false;
 	for (var i=0; i < this.animationData.labels.length; i++) {
@@ -77,13 +93,17 @@ Sprite.prototype.gotoAndPlayWithin = function(frame) {
 		if (curr.name == frame) {
 			foundLabel = true;
 			this.currLabel = curr;
+			this.frameMin = curr.i;
+			this.frameMax = curr.e;
+			this.timing = this.animationData.timings[frame][this.tMode];
+			this.rate = 1000 / this.timing;
+			//console.log(this.timing);
 			break;
 		}
 	}
 	if (foundLabel) this.currFrame = this.currLabel.i;
 	if (!foundLabel) {
 		console.log("failed to find label: " + frame);
-		this.constrained = false;
 	}
 	this.timer = 0;
 }

@@ -2,16 +2,11 @@
 	"name" : "Quality Cat Game Library",
 	"major" : 0,
 	"minor" : 7,
-	"revision" : 2,
+	"revision" : 3,
 	"releaseType" : "indev-alpha",
 	"platform" : "HTML5",
 	"releaseNotes" : [
-		"Added License",
-		"Added credits for assets in the tech demos directory",
-		"Added more code credits for those sources I was able to track down again",
-		"Started working on documentation",
-		"Deleted a few more redundant files",
-		"Fixed GameLibLIST.bat to create text file with correct name",
-		"Started work on VectorPrefabGenerator class"
+		"Added Delta Time for spritess",
+		"Added option to choose between per-frame/fixed/dependent or DeltaTime/dynamic/independent framerates for sprites",
 	]
 }

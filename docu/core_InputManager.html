@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Quality Cat Game Library - Documentation</title>
+		<link rel="stylesheet" href="STYLES/global.css" type="text/css"/>
+	</head>
+	<body>
+		<table border="0" id="wrapper">
+			<tr>
+				<th class="miniWrapper" style="height:64px;" colspan="2">Quality Cat Game Library - documentation</th>
+			</tr>
+			<tr>
+				<td class="miniWrapper" style="width:30%;" id="nav">
+					<h4>
+						Library
+					</h4>
+					<ul id="navList">
+						<li class="navItem"><a href="INDEX.html">Documentation - Index</a></li>
+						<li class="navItem"><a href="ABOUT.html">About</a></li>
+						<li class="navItem"><a href="TEMPLATES.html">Templates</a></li>
+						<li class="navItem"><a href="pkg_core.html">core</a></li>
+					</ul>
+				</td>
+				<td class="miniWrapper" id="content">
+					<h4>
+						core.InputManager
+					</h4>
+					<p>
+						handles keyboard and mouse events
+					</p>
+					<h4>
+						properties
+					</h4>
+					<ul>
+						<li>parent:Object (usually Game), </li>
+						<li>timing:Number, cooldown for keys/clicks, defaults to 30, measured in ticks</li>
+						<li>keyStates:Object, holds key states</li>
+						<li>mouseState:Object, holds mouse state (x,y,isDown)</li>
+					</ul>
+					<h4>
+						methods
+					</h4>
+					<ul>
+						<li>InputManager(parent):InputManager, constructor, creates event listeners
+						and sets parent propety to parent</li>
+						<li>checkMouseCollision(e):object{result:Boolean}, checks if the given object is colliding with the mouse pointer</li>
+						<li>checkKeyDown(keyID,[keyName]):Boolean, checks if a key is down</li>
+						<li>checkKeyPress(keyID,[keyName]):Boolean, checks if a key was pressed (only works once if key is held,
+						key must be released and pressed again to work again, otherwise, same as checkKeyDown), BUGGY!</li>
+						<li>tick():void, update/tick method, updates keystate timers</li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

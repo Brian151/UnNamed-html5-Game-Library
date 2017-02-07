@@ -58,6 +58,8 @@ another project that may or may not get merged into this one. Said project is an
 with drawing vector shapes.
 credits: HexCraft's Hexorium Glow used again.
 file: gameSprite.html
+standardization progress:
+	Sprite,SpriteSheet - ~85%
 
 tech demo 6 :
 Testing the ability to render UI themes similar to that of the Aero theme,

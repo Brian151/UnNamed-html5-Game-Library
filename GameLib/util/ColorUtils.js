@@ -73,3 +73,16 @@ ColorUtils.invert = function(color) {
 	var a = color[3]
 	return [r,g,b,a];
 }
+/* IMPORT/IMPLEMENT LATER!
+function compositeColors(c1,c2,a) {
+	var fA = a/255;
+	var rD = getDelta(c1[0],c2[0]);
+	var gD = getDelta(c1[1],c2[1]);
+	var bD = getDelta(c1[2],c2[2]);
+	var r = c1[0] + Math.floor((rD * fA));
+	var g = c1[1] + Math.floor((gD) * fA);
+	var b = c1[2] + Math.floor((bD * fA));
+	alert(r);
+	return [r,g,b];
+}
+*/

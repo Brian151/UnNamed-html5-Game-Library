@@ -38,6 +38,7 @@ dispBin(t4);
 var BinTools = new function(){}();
 //imported from code I (Brian151) wrote here: https://jsfiddle.net/158vahfc/1/
 BinTools.bitfieldUtil = new function(){
+	//masks for reading/toggling bits
 	this.masks = [
 		0b10000000,
 		0b01000000,
@@ -47,11 +48,34 @@ BinTools.bitfieldUtil = new function(){
 		0b00000100,
 		0b00000010,
 		0b00000001
-		];
+	];
+	/*
+	masks for copying all non-targeted
+	bits when performing the toggle operation
+	*/
+	this.masks2 = [
+		0b01111111
+		0b10111111
+		0b11011111
+		0b11101111
+		0b11110111
+		0b11111011
+		0b11111101
+		0b11111110
+	];
+	//how much to bitwise shift to read the specified bit
 	this.shifts = [7,6,5,4,3,2,1,0];
 }();
 BinTools.bitfieldUtil.readFlag = function(field,flag){
 	var out = (field & this.masks[flag - 1]) >> this.shifts[flag - 1];
+	return out;
+}
+BinTools.bitfieldUtil.toggleFlag = function(field,flag) {
+	var mask1 = this.masks2[flag - 1]; //mask to copy non-targeted bits
+	var mask2 = this.masks[flag - 1]; //mask to toggle target bit
+	var temp = field & mask1; //use bitwise AND to copy the non-target bits 
+	var out = field ^ mask2; //use bitwise XOR to toggle the target bit
+	out = out | temp; //use bitwise OR to re-combine the non-target bits
 	return out;
 }
 BinTools.bitfieldUtil.setFlag = function(field,flag) {

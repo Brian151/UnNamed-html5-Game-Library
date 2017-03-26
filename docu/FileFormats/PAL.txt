@@ -1,0 +1,67 @@
+PAL file, as according to Worms Knowledge Base,
+with extra notes and speculation
+
+"RIFF" file sig
+uint32 [lit] fileLen
+	"PAL " form sig
+	{
+	"data" data sig
+	uint32 [lit] datLen
+	uint16 [lit] datVer 0x0300
+	uint16 [lit] colCount
+	<colCount> entries 
+		{
+		byte red
+		byte green
+		byte blue
+		byte flags
+		}
+	}
+	{
+	"offl"
+	len
+	}
+	{
+	"tran" //based on name, this is probably transparency
+	len
+	/*
+		uint16 entries
+		<entries> bytes transparency
+	*/
+	}
+	{
+	"unde"
+	len
+	}
+
+size for chunk heads:	
+head data = 12 bytes
+section headers = 32 bytes
+!can remove 24 bytes of the extra data sections
+section headers = 8 bytes
+total (heads) = 20 bytes
+
+size for data:
+datVer = 2 bytes
+count = 2 bytes
+(count * 4) = ? bytes for entries
+
+size for offl:
+!if not used : 0
+
+size for trans:
+!if not used : 0
+!if used:
+2 bytes count
+(count bytes) = ? bytes for entries
+
+size for unde
+!if not used : 0
+
+for modern purposes, the files can be done as
+"RIFF" <len> "PAL "
+"data" {...}
+"tran" {...}
+
+that brings head count to 28 bytes
+offl and unde are forgotten...

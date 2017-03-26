@@ -6,9 +6,9 @@ Game.prototype.init = function(mainCanvas) {
 	this.assets = new AssetManager(this,"assets/");
 	this.canvas = document.getElementById("gameScreen")
 	this.renderer = new GraphicsHandler(this.canvas);
-	this.assets.loadAsset("image","pal_test/UF_evil_straight_08.png","UF");
-	this.assets.loadAsset("image","pal_test/BH_good_03.png","BH");
-	this.assets.loadAsset("image","pal_test/BH_good_pal2.png","BH_pal2");
+	this.assets.queueAsset("img","pal_test/UF_evil_straight_08.png","UF");
+	this.assets.queueAsset("img","pal_test/BH_good_03.png","BH");
+	this.assets.queueAsset("img","pal_test/BH_good_pal2.png","BH_pal2");
 	this.sprites = [];
 	this.exportBox = tempCanvas = document.getElementById("export");
 }
@@ -20,11 +20,11 @@ Game.prototype.tick = function(){
 		if(this.assets.queuecomplete) {
 			this.state = "play";
 			//console.log("start game!");
-			this.sprites.push(this.assets.requestAsset("image","UF"));
-			this.sprites.push(this.assets.requestAsset("image","BH"));
+			this.sprites.push(this.assets.requestAsset("img","UF"));
+			this.sprites.push(this.assets.requestAsset("img","BH"));
 			var pal1 = this.renderer.getPalette(this.sprites[0]);
 			var pal2 = this.renderer.getPalette(this.sprites[1]);
-			var pal3 = this.renderer.getPalette(this.assets.requestAsset("image","BH_pal2"));
+			var pal3 = this.renderer.getPalette(this.assets.requestAsset("img","BH_pal2"));
 			//var indexed = this.renderer.toIndexedColor(this.sprites[1]);
 			this.sprites[1] = this.renderer.swapPalette(this.sprites[1],pal3,true);
 			this.renderer.drawPalette(pal2,8,8,24);

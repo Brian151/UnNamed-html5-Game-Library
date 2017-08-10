@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<style type="text/css">
+			canvas{
+				border: 3px solid black;
+			}
+			h4 {
+				margin: 2px;
+			}
+			#instruct{
+				font-weight:bold;
+			}
+		</style>
+		<title>Quality Cat Game Library - stampit recode test</title>
+		<meta name="description" content="HTML5 SLICE-9 TEST 1">
+		<meta name="author" content="ETXAlienRobot201">
+		<meta name="organization" content="Crystalien Redux Project">
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<canvas id="gameScreen" width="600" height="400">Your browser doesn't support HTML5 Canvas!!!</canvas>
+		<script src="thirdparty/stampit/stampit.js"></script>
+		<script src="QualityCatGameLibrary.js"></script>
+		<script src="util/ScriptImportUtil.js"></script>
+		<div id="scripts" style="display:none;"></div>
+		<script>
+			var imports = [
+			"core.Game",
+			"MyGame"
+			].join("\n");
+			ScriptImportUtil.importFromList(imports);
+		</script>
+		<canvas id="screenP" style="display:none" width="600" height="400">Your browser doesn't support HTML5 Canvas!!!</canvas>
+		</div>
+	</body>
+</html>

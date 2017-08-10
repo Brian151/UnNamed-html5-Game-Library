@@ -1,0 +1,20 @@
+Version number is NOT 2, technically...
+But, it will be a significant leap when this becomes official
+
+The library is being re-designed to use Stampit for all its OOP
+Benefits are:
+	Exploit JS loose typed nature and remove the ridged class construct
+	Not having to write some annoying/ugly/repetitive code to do OOP
+	Actually tolerable to continue writing JS directly
+
+It also is being converted into self-contained modules*
+Benefits are:
+	No more global scope pollution
+	Easier to do feature checks
+
+*Before it's asked or Suggested, NOT NODE/NPM modules...
+Absolutely no way is that happening, nor will it ever happen.
+
+One other tidbit : some broken features will be fixed
+	fixed:
+		progress meters! (they did work when I intitally coded them, I broke them during a re-factor)

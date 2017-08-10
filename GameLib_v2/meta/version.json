@@ -1,0 +1,12 @@
+{
+	"name" : "Quality Cat Game Library",
+	"major" : 0,
+	"minor" : 7,
+	"revision" : 3,
+	"releaseType" : "indev-alpha",
+	"platform" : "HTML5",
+	"releaseNotes" : [
+		"Added Delta Time for spritess",
+		"Added option to choose between per-frame/fixed/dependent or DeltaTime/dynamic/independent framerates for sprites",
+	]
+}

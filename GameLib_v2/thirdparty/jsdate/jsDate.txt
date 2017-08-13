@@ -1,0 +1,101 @@
+
+Name: jsDate
+Desc: VBScript native Date functions emulated for Javascript
+Author: Rob Eberhardt, Slingshot Solutions - http://slingfive.com/
+History:
+	2006-03-28	v1.00 b1
+		- added MonthNames and WeekdayNames arrays
+		- added FormatDateTime w/US defaults
+		- added VB6's Format, for better non-US flexibility
+		- changed functions to methods of intrinsic Date object
+		- changed DateDiff to now accept yearless date params, like VBS
+		- implemented CDate (can handle dash/dot date separators, yearless dates, dateless times & other variations)
+		- implemented DateDiff/"ww" interval
+		- implemented FirstDayOfWeek parameter on various functions
+		- fixed DatePart/"y", "w", & "ww" intervals
+		- fixed DateDiff/"w" interval (caught by Michael Leibman) 
+		- fixed DateDiff/DST rollover (thanks to Roger Dear for the heads-up & Michael Leibman for suggesting a fix)
+		- fixed MonthName & WeekdayName params to match VBS (now accept number, but dates still work for compatibility)
+	2005-08-04	v0.94
+		- scrapped new DateDiff approach to better match VBScript's simplistic Y/M/Q
+	2005-08-03	v0.93
+		- fixed DateDiff/leapyear bug with yyyy/m/q intervals
+	2004-11-26	v0.91
+		- fixed DatePart/ww bug
+		- added MonthName and WeekdayName
+	2004-08-30	v0.9		
+		- brand new
+
+
+Itemized Docs: 
+IsDate
+	MSDN: http://msdn.microsoft.com/library/en-us/script56/html/vsfctIsDate.asp
+	Notes: 
+		less strict than VBScript's IsDate, since JS allows invalid dates to overflow (e.g. Jan 32 transparently becomes Feb 1)
+CDate
+	DESC: converts more formats allowed by VBS, e.g. different separators, yearless date, dateless time
+	MSDN: http://msdn.microsoft.com/library/en-us/script56/html/vsfctCDate.asp
+	REQUIRES: IsDate
+DateAdd
+	MSDN: http://msdn.microsoft.com/library/en-us/script56/html/vsfctDateAdd.asp
+	REQUIRES: IsDate
+DateDiff
+	MSDN: http://msdn.microsoft.com/library/en-us/script56/html/vsfctDateDiff.asp
+	REQUIRES: IsDate
+	NOT SUPPORTED: firstweekofyear (default is equiv to vbUseSystem)
+DatePart
+	MSDN: http://msdn.microsoft.com/library/en-us/script56/html/vsfctDatePart.asp
+	REQUIRES: IsDate, DateDiff
+	NOT SUPPORTED: firstweekofyear (default is equiv to vbUseSystem)
+MonthName
+	MSDN: http://msdn.microsoft.com/library/en-us/script56/html/vsfctMonthName.asp
+	REQUIRES: IsDate
+WeekdayName
+	MSDN: http://msdn.microsoft.com/library/en-us/script56/html/vsfctWeekdayName.asp
+	REQUIRES: IsDate
+Weekday
+	MSDN: http://msdn.microsoft.com/library/en-us/script56/html/vsfctWeekday.asp
+FormatDateTime
+	MSDN: 
+	REQUIRES: IsDate, WeekdayName, MonthName
+	NOTES:
+		"inspired" by http://www.4guysfromrolla.com/webtech/code/FormatDateTime.shtml
+Format
+	DESC: date-only version of VB6 Format function, extended with more Format symbols
+	MSDN: (is mis-linked to VBA), SO a better ref: http://www.apostate.com/programming/vb-Format.html
+	REQUIRES: IsDate, DatePart
+	NOTES: 
+		based off Scott Connelly's Format at http://www.js-examples.com/page/javascripts__example.html?view=874
+		p_Format - accepts any variation of the following list:
+		:		<-- NOT SUPPORTED
+		/		<-- NOT SUPPORTED
+		c		complete date as ddddd and complete time as t t t t t, in that order
+		d		month day  - 5
+		dd		month day, 2-digits  - 05
+		ddd		weekday name, abbreviated  - Wed
+		dddd	weekday name  - Wednesday
+		ddddd	complete date in default shortdate Format - M/D/YY			*
+		dddddd	complete date in default longdate Format  - MMMM DD, YYYY	*
+		m		month number - 9
+		mm		month number, 2-digits  - 9
+		mmm		month name, abbreviated  - Sep
+		mmmm	month name  - September
+		q		quarter of the year
+		y		day of the year as a number (1 - 366)
+		yy		2-digit year  - 02
+		yyyy	4-digit year  - 2002	
+		h		hours - 3
+		hh		hours, 2-digits  - 03
+		n		minutes  - 05
+		nn		minutes, 2-digits - 05
+		s		seconds  - 8
+		ss		seconds, 2-digits  - 08
+		t t t t t	complete time in default longtime Format - H:MM:SS	*
+		AM/PM	AM or PM
+		am/pm	am or pm
+		A/P		A or P
+		a/p		a or p
+		AMPM	same as am/pm	*
+		timezone	timezone in hours from GMT  - GMT+5
+		time24	time based on a 24hr clock  - 18:24	
+		time	time based on am/pm  - 6:24 PM  

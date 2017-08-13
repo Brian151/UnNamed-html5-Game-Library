@@ -7,11 +7,13 @@ var LoadingGame = stampit.compose(QualityCatGameLibrary.Game,{
 		countDown : 10,
 		timer : 0,
 		stateCoolDown : false,
-		currentLoader : 0
+		currentLoader : 0,
+		iterator : 0
 	},
 	deepProps : {
 		loaders : [],
-		loader : {}
+		loader : {},
+		timerTest : {}
 	},
 	methods : {
 		start : function(mainCanvas) {
@@ -26,7 +28,8 @@ var LoadingGame = stampit.compose(QualityCatGameLibrary.Game,{
 			if (this.state == "boot") {
 				if (this.ticks < 100) {
 					var notLoaded = false;
-					var imports = ["Math","ProgressMeter","ProgressBar","ProgressDonut","ProgressThrobber"];
+					// this is actually not working right...
+					var imports = ["Math","ProgressMeter","ProgressBar","ProgressDonut","ProgressThrobber","Timer"];
 					for (var i=0; i < imports.length; i++) {
 						var test = QualityCatGameLibrary.hasAttachedModule(imports[i]);
 						if (!test) {
@@ -49,6 +52,9 @@ var LoadingGame = stampit.compose(QualityCatGameLibrary.Game,{
 						}
 						this.loader = this.loaders[this.currentLoader];
 						this.state = "play";
+						this.timerTest = QualityCatGameLibrary.Timer();
+						this.timerTest.setTiming(1,3,3,7);
+						this.timerTest.start();
 					}
 				}
 			}
@@ -67,19 +73,33 @@ var LoadingGame = stampit.compose(QualityCatGameLibrary.Game,{
 							this.currentLoader++;
 							if (this.currentLoader >= this.loaders.length) this.currentLoader = 0;
 							this.loader = this.loaders[this.currentLoader];
+							// console.clear();
 						}
 					}
 				} else {
 					this.progress += .01;
 				}
-				
+				this.timerTest.tick();
+				/* if (!(this.iterator % 10)) {
+					console.log(JSON.stringify(this.timerTest.timeStart) + " | " + JSON.stringify(this.timerTest.time));
+					console.log("TIMER : " + this.timerTest.toString());
+				}
+				this.iterator++;
+				if (this.iterator >= 1000) {
+					this.iterator = 0;
+				} */
 				this.loader.tick();
 			}
 		},
 		draw : function() {
 			if (this.state == "play") {
-				this.graphics.clearRect(0,0,600,400);
+				this.graphics.ctx.fillStyle = "#000080";
+				this.graphics.fillRect(0,0,600,400);
 				this.loader.draw();
+				this.graphics.ctx.fillStyle = "#ff0000";
+				var time = "TIMER  :  " + this.timerTest.toString(true);
+				this.graphics.ctx.font = "24px Verdana";
+				this.graphics.ctx.fillText(time,300,32);
 			}
 		}
 	}

@@ -18,7 +18,8 @@ var LoadingGame = stampit.compose(QualityCatGameLibrary.Game,{
 	methods : {
 		start : function(mainCanvas) {
 			this.canvas = document.getElementById(mainCanvas);
-			this.graphics = GameObjs.renderer = new GraphicsHandler(this.canvas);
+			this.graphics = GameObjs.renderer = QualityCatGameLibrary.Graphics();
+			this.graphics.attach(this.canvas);
 			this.run();
 		},
 		tick : function() {

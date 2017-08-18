@@ -57,6 +57,7 @@ GraphicsHandler.prototype.drawClippedImage = function(img,x,y,w,h,ix,iy,iw,ih){
 	//context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
 	//context.drawImage(img,ix,iy,w,h,x,y,w,h); //refs
 }
+// impl ---> GraphicsUtils.getPalette
 GraphicsHandler.prototype.getPalette = function(img,asImage) {
 	var srcImg = img;
 	this.preRenderZone.innerHTML += "<canvas id=\"tempPre\" width=\"" + srcImg.width + "\" height=\"" + srcImg.height + "\"></canvas>";
@@ -104,6 +105,7 @@ GraphicsHandler.prototype.getPalette = function(img,asImage) {
 	//console.log(JSON.stringify(pal));
 	return pal;
 }
+// impl ---> GraphicsUtils.showPalette
 GraphicsHandler.prototype.drawPalette = function(pal,xScale,yScale,width) {
 	var x = 0;
 	var y = 0;
@@ -121,6 +123,7 @@ GraphicsHandler.prototype.drawPalette = function(pal,xScale,yScale,width) {
 		x += xScale;
 	}
 }
+// impl --- > GraphicsUtils.imageToIndexedColor
 GraphicsHandler.prototype.toIndexedColor = function(img) {
 	var srcImg = img;
 	this.preRenderZone.innerHTML += "<canvas id=\"tempPre\" width=\"" + srcImg.width + "\" height=\"" + srcImg.height + "\"></canvas>";
@@ -171,6 +174,7 @@ GraphicsHandler.prototype.toIndexedColor = function(img) {
 	//console.log(JSON.stringify(newImg));
 	return newImg;
 }
+// impl ---> GraphicsUtils.imageDataToImage
 GraphicsHandler.prototype.imageDataToImage = function(imgD){
 	var src = imgD;
 	this.preRenderZone.innerHTML += "<canvas id=\"tempPre\" width=\"" + src.width + "\" height=\"" + src.height + "\"></canvas>";
@@ -185,6 +189,7 @@ GraphicsHandler.prototype.imageDataToImage = function(imgD){
 	this.preRenderZone.innerHTML = "";
 	return image2;
 }
+// impl --- > GraphicsUtils.applyPalette
 GraphicsHandler.prototype.swapPalette = function(imgIndexed,pal,isImage) {
 	var src = imgIndexed;
 	if (isImage) src = this.toIndexedColor(src);

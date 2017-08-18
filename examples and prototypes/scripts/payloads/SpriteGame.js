@@ -1,5 +1,7 @@
-/*not really a required file...
-Just an example of how to launch the game*/
+/*
+	not really a required file...
+	Just an example of how to launch the game
+*/
 
 Game.prototype.init = function(mainCanvas) {
 	this.state = "init";

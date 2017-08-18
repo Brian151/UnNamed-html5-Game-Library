@@ -163,6 +163,7 @@ function GraphicsHandler(canvas) {
 	
 	}
 	
+	// impl ---> GraphicsUtils.doImageEffects
 	this.skinEffects = function(img,img2,effectData) {
 		var effects = effectData;
 		var eff_gray = effects.grayscale;

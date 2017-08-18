@@ -1,3 +1,7 @@
+/*
+	just ... FACEPALM..............................
+*/
+
 function UIText(parent,x,y,txt,align,font,linked) {
 	this.parent = parent;
 	if(!font){
@@ -553,4 +557,198 @@ UIManager.prototype.addPane = function(configData) {
 		this.UIPanes[temp].init();
 	}
 }
+var UIText = stampit.props({
+	oX : 0,
+	oY : 0,
+	x : 0,
+	y : 0,
+	txt : "text",
+	txtLink : false
+	
+}).deepProps({
+	font : {
+		"w" : "bold",
+		"s" : "20px",
+		"f" : "Arial",
+		"c" : "#000000"
+	}
+}).methods({
+	setAttributes : function(){},
+	tick : function() {
+		//console.log("UI TEXT TICK!");
+		if(this.txtLink) {
+			this.txt = UIDataLinker[this.txtLink];
+		}
+		if (this.textAlign == "center") {
+			this.x = this.parent.x + Math.round((this.parent.width / 2));
+		} else if (this.textAlign == "right") {
+			this.x = (this.parent.x + this.parent.width) + this.oX;
+		} else if (this.textAlign == "left") {
+			this.x = this.parent.x + this.oX;
+		}
+		this.y = this.parent.y + this.oY;
+	},
+	draw : function() {
+		var tempA = GameObjs.renderer.ctx.textAlign;
+		var tempC = GameObjs.renderer.ctx.fillStyle;
+		GameObjs.renderer.ctx.fillStyle = this.font.c;
+		GameObjs.renderer.ctx.textAlign = this.textAlign;
+		var tempF = GameObjs.renderer.ctx.font;
+		GameObjs.renderer.ctx.font = this.font.w + " " + this.font.s + " " + this.font.f;
+		GameObjs.renderer.ctx.fillText(this.txt,this.x,this.y);
+		GameObjs.renderer.ctx.textAlign = tempA;
+		GameObjs.renderer.ctx.fillStyle = tempC;
+		GameObjs.renderer.ctx.font = tempF;
+	},
+	
+});
+QualityCatGameLibrary.attachModule(UIText,"UIText");
+
+var UIComponent = stampit.props({
+	oX : 0,
+	oY : 0,
+	x : 0,
+	y : 0,
+	width : 0,
+	height : 0,
+	fillW : false,
+	fillH : false,
+	tYO : 0,
+	scaleX : 0,
+	scaleY : 0,
+	prevW : 0,
+	prevH : 0,
+	overflowX : 0,
+	overflowY : 0,
+	resized : false,
+	hasBG : false,
+	bgColor : "#ffffff",
+	hasBGImage : false
+}).deepProps({
+	components : [],
+	bg2 : {},
+	bgImage : {},
+	configData : {}
+}).methods({
+	setAttributes : function(){},
+	createChildren : function(){
+		//console.log("GUI COMPONENT INIT!");
+		for (var i=0; i < this.configData.components.length; i++){
+			var curr = this.configData.components[i];
+			switch(curr.type) {
+				case "component" : {
+				console.log("normal component!");
+					var temp = this.components.push(new UIComponent(this,curr.x,curr.y,curr.w,curr.h,curr));
+					temp--;
+					break;
+				}
+				case "skinned_component" : {
+					var temp = this.components.push(new SkinnedUIComponent(this,curr.x,curr.y,curr.w,curr.h,curr));
+					temp--;
+					break;
+				}
+				case "button" : {
+					var temp = this.components.push(new UIButton(this,curr.x,curr.y,curr.w,curr.h,curr));
+					temp--;
+					break;
+				}
+				case "text" : {
+					var temp = this.components.push(new UIText(this,curr.x,curr.y,curr.txt,curr.align,curr.font,curr.link));
+					temp--;
+					break;
+				}
+				default: {
+					break;
+				}
+			}
+			if(curr.components){
+				this.components[temp].init();
+			}
+		}
+	},
+	tick : function() {
+		if(!this.configData.freePos){
+			this.x = this.parent.x + this.oX;
+			this.y = this.parent.y + this.oY;
+			if (this.oX < 1 && this.oX > 0) this.x = this.parent.x + Math.round((this.parent.width * this.oX));
+			if (this.oY < 1 && this.oY > 0) this.y = this.parent.y + Math.round((this.parent.height * this.oY));
+		}
+		this.resized = false;
+			
+		if(this.fillW){
+			if (this.scaleX) {
+				this.width = Math.round(this.parent.width * this.scaleX);
+			} else {
+				var w2 = (this.parent.x + this.parent.width) - this.x + this.overFlowX; 
+				this.width = w2;
+			}
+		}
+		if(this.fillH){
+			if (this.scaleY) {
+				this.height = Math.round(this.parent.height * this.scaleY);
+			} else {
+				var h2 = (this.parent.y + this.parent.height) - this.y + this.overFlowY; 
+				this.height = h2;
+			}
+		}
+		if(this.prevW != this.width || this.prevH != this.height) this.resized = true;
+		this.prevW = this.width;
+		this.prevH = this.height;
+		this.customTick();
+		for (var i=0; i < this.components.length; i++){
+			this.components[i].tick();
+		}
+	},
+	draw : function() {
+		if(this.hasBG) {
+			if(this.hasImgBG) {
+				if(this.resized) this.bg2 = this.parent.parent.renderer.preRenderPattern(this.bgImage,this.width,this.height);
+				GameObjs.renderer.drawPattern(this.bg2,this.x,this.y,this.width,this.height,true,true);
+			} else {
+				var tCol = GameObjs.renderer.ctx.fillStyle;
+				GameObjs.renderer.ctx.fillStyle = this.bgColor;
+				GameObjs.renderer.ctx.fillRect(this.x,this.y,this.width,this.height);
+				GameObjs.renderer.ctx.fillStyle = tCol;
+			}
+		}
+		this.customDraw();
+		for (var i=0; i < this.components.length; i++){
+			this.components[i].draw();
+		}
+	},
+	findMainParent : function() {
+		var search = this.parent;
+		if (search.isUIManager) {
+			out = search;
+		} else {
+			out = this.parent.findMainParent();
+		}
+		return out;
+	},
+	findMainParentComponent : function() {
+		var search = this.parent;
+		if (search.isUIManager) {
+			out = this;
+		} else {
+			out = this.parent.findMainParent();
+		}
+		return out;
+	},
+	close : function() {
+		alert("this UI Panel has been closed!");
+	}
+});
+QualityCatGameLibrary.attachModule(UIComponent,"UIComponent");
+
+var SkinnedUIComponent = stampit.deepProps({
+	skin : {},
+	xBar : {},
+	yBar : {},
+	sBar : {}
+}).props({
+	canResizeX : true,
+	canResizeY : true
+}).methods({
+	
+});
 

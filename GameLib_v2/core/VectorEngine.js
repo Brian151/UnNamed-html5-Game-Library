@@ -18,7 +18,8 @@ VectorTool.beginFill = function(color) {
 		this.ctx.fillStyle = color;
 	}
 }
-/*WIP!!!
-AS3 docs about flash graphics API:
-http://help.adobe.com/en_US/ActionScript/3.0_ProgrammingAS3_Flex/WS5b3ccc516d4fbf351e63e3d118a9b90204-7dd9.html
+/*
+	WIP!!!
+	AS3 docs about flash graphics API:
+	http://help.adobe.com/en_US/ActionScript/3.0_ProgrammingAS3_Flex/WS5b3ccc516d4fbf351e63e3d118a9b90204-7dd9.html
 */

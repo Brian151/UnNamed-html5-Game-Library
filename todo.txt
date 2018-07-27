@@ -4,6 +4,7 @@ DOCUMENTATION!!! []
 re-structure packages [x]
 move color palette code to ImageUtils []
 tweak and implement BitmapGenerator in ImageUtils []
+restructure again...
 
 wip:
 graphics handler usefulness - adding native context 2D draw API calls []

@@ -1,3 +1,112 @@
+(function(targetscope){ // todo : not bind modules to global context
+	function UIComponent (){
+		return {
+			x : 0,
+			y : 0,
+			width : 200,
+			height : 100,
+			tick : {}, // function : void
+			draw : drawComponent, // function : void
+			skin : {},
+			children : [],
+			parent : targetscope,
+			parentroot : targetscope
+		}
+	}
+	function UIComponentSkin () {
+		return {
+			top : 16,
+			right : 4,
+			bottom : 4,
+			left : 4,
+			mode : 0,
+			draw : drawSkin, // function : void
+			tick : {}, // function : void
+			parent : targetscope,
+			parentroot : targetscope
+		}
+	}
+	
+	function drawComponent() {
+		this.x = Math.floor(Math.random() * (800 - 200));
+		this.y = Math.floor(Math.random() * (400 - 100));
+		var x = this.parent.x + this.x;
+		var y = this.parent.y + this.y;
+		this.parentroot.ctx.fillStyle = "#000000";
+		// console.log(this.x,this.y);
+		this.parentroot.ctx.fillRect(x,y,this.width,this.height);
+		if (this.children.length > 0) {
+			for (var i=0; i < this.children.length; i++) {
+				// console.log(i);
+				this.children[i].draw();
+			}
+		}
+	}
+	function drawSkin() {
+		this.parentroot.ctx.fillStyle = "#0000ff";
+		var r = this.parentroot.ctx;
+		var p = this.parent;
+		var x = p.x;
+		var y = p.y - this.top;
+		r.fillRect(x,y,p.width,this.top);
+		x = p.x + p.width;
+		y = p.y;
+		r.fillRect(x,y,this.right,p.height);
+		x = p.x;
+		y = p.y + p.height;
+		r.fillRect(x,y,p.width,this.bottom);
+		x = p.x - this.left;
+		y = p.y;
+		r.fillRect(x,y,this.left,p.height);
+		x = p.x - this.left;
+		y = p.y - this.top;
+		r.fillRect(x,y,this.left,this.top);
+		x = p.x + p.width
+		r.fillRect(x,y,this.right,this.top);
+		y = p.y + p.height;
+		r.fillRect(x,y,this.right,this.bottom);
+		x = p.x - this.left;
+		y = p.y + p.height;
+		r.fillRect(x,y,this.left,this.bottom);
+	}
+	var enum_skintype = [ // todo, enum generator ?
+		"default",
+		"Hor",
+		"Vert",
+		"imageslice9",
+		"imageslice3H",
+		"imageslice3V"
+	];
+	var enum_components = [
+		"component",
+		"skin"
+	]
+	function UIFactory(type) {
+		console.log("created a UI component of type : " + enum_components[type]);
+		switch (type) {
+			case 0:
+				return UIComponent();
+			case 1:
+				return UIComponentSkin();
+			default:
+				return UIComponent();
+		}
+	}
+	function GUIBuilder(template,parent) {
+		var out = UIFactory(template.type);
+		var hasBeenSkinned = false; // todo
+		out.parent = parent;
+		console.log(template.childs.length);
+		if (template.childs.length > 0) {
+			for (var i=0; i < template.childs.length; i++) {
+				out.children.push(GUIBuilder(template.childs[i],out));
+			}
+		}
+		return out;
+	}
+	targetscope["WebKittenUI"] = GUIBuilder;
+})(this);
+
 function UIText(parent,x,y,txt,align,font,linked) {
 	this.parent = parent;
 	if(!font){

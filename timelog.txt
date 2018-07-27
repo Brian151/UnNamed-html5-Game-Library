@@ -1,0 +1,11 @@
+Offical development log:
+Started on July 27, 2018 at 2:14 PM MST
+re-named library to "WebKitten"
+Current focus : GUI subsystem
+4:54 PM, time elapsed 2 hours 41 seconds
+system re-coded to use factories and configurable components
+basic GUI rendering code re-implemented
+todo : 
+cleanup
+re-implement GUI update logic & management system
+handler registry system

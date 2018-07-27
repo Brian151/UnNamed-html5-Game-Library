@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WebKitten Game Library - GUI test</title>
+</head>
+<body>
+	<canvas id="screen" width="800" height="400">NO HTML5</canvas>
+	<script type="text/javascript" src="UIComponents.js"></script>
+	<script type="text/javascript">
+		var ctx = document.getElementById("screen").getContext("2d");
+		var x = 0;
+		var y = 0;
+		var test = WebKittenUI({
+			type: 0,
+			childs: [
+				{
+						type: 1,
+						childs: []
+				}
+			]
+		},this);
+		var counter = 0;
+		function draw() {
+			if (!(counter % 25)) {
+			ctx.clearRect(0,0,1000,500);
+			test.draw();
+			counter = 0;
+			}
+			counter++;
+			requestAnimationFrame(draw);
+		}
+		requestAnimationFrame(draw);
+	</script>
+</body>
+</html>

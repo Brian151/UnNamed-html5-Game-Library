@@ -15,12 +15,12 @@
 	}
 	function UIComponentSkin () {
 		return {
-			top : 16,
-			right : 4,
-			bottom : 4,
-			left : 4,
+			top : 29, // 16
+			right : 3, // 4
+			bottom : 3, // 4
+			left : 3, // 4
 			mode : 0,
-			draw : drawSkin, // function : void
+			draw : drawSkinImage, // function : void
 			tick : {}, // function : void
 			parent : targetscope,
 			parentroot : targetscope
@@ -69,6 +69,42 @@
 		y = p.y + p.height;
 		r.fillRect(x,y,this.left,this.bottom);
 	}
+	function drawSkinImage() { 
+		var p = this.parent;
+		var r = this.parentroot;
+		var img = r.theImage;
+		// console.log(img);
+		// drawClippedImage(img,x,y,w,h,ix,iy,iw,ih)
+		var x = p.x;
+		var y = p.y - this.top;
+		var w = img.width - (this.left + this.right);
+		r.drawClippedImage(img,x,y,p.width,this.top,this.left,0,w,this.top); // top
+		x = p.x + p.width;
+		y = p.y;
+		var h = img.height - (this.top + this.bottom);
+		r.drawClippedImage(img,x,y,this.right,p.height,img.width - this.right,this.top,this.right,h); // right
+		x = p.x;
+		y = p.y + p.height;
+		h = img.height - this.bottom;
+		r.drawClippedImage(img,x,y,p.width,this.bottom,this.left,h,w,this.bottom); // down
+		x = p.x - this.left;
+		y = p.y;
+		h = img.height - (this.top + this.bottom);
+		r.drawClippedImage(img,x,y,this.left,p.height,0,this.top,this.left,h); // left
+		x = p.x - this.left;
+		y = p.y - this.top;
+		r.drawClippedImage(img,x,y,this.left,this.top,0,0,this.left,this.top); // top left
+		x = p.x + p.width
+		w = img.width - this.right;
+		r.drawClippedImage(img,x,y,this.right,this.top,w,0,this.right,this.top); // top right
+		y = p.y + p.height;
+		w = img.width - (this.right);
+		h = img.height - (this.top + this.bottom);
+		r.drawClippedImage(img,x,y,this.right,this.bottom,w,h,this.right,this.bottom); // bottom right
+		x = p.x - this.left;
+		y = p.y + p.height;
+		r.drawClippedImage(img,x,y,this.left,this.bottom,0,h,this.left,this.bottom); // bottom left
+	}
 	var enum_skintype = [ // todo, enum generator ?
 		"default",
 		"Hor",
@@ -96,6 +132,15 @@
 		var out = UIFactory(template.type);
 		var hasBeenSkinned = false; // todo
 		out.parent = parent;
+		/*if (template.handlers.length > 0) {
+			for (var i=0; i < template.handlers.length; i++) { // not liking...
+				var curr = template.handlers[i];
+				var curr2 = getHandler(curr[0],curr[1]);
+				if (curr2[3] != "fillerjunk" && curr2[3] == curr[2]) {
+					out[curr[2]] = curr2[0];
+				}
+			}
+		}*/
 		console.log(template.childs.length);
 		if (template.childs.length > 0) {
 			for (var i=0; i < template.childs.length; i++) {
@@ -103,6 +148,20 @@
 			}
 		}
 		return out;
+	}
+	var UIHandlerRegistry = [
+		// function, name, component type, method name
+		[drawComponent,"component_draw_default","component","draw"],
+		[drawSkin,"skin_draw_default","skin","draw"],
+	]
+	function getHandler(type,name) {
+		for (var i=0; i < UIHandlerRegistry.length; i++) {
+			var curr = UIHandlerRegistry[i];
+			if (curr[1] == name && curr[2] == type) {
+				return curr;
+			}
+		}
+		return [function(){},"placeholder",type,"fillerjunk"];
 	}
 	targetscope["WebKittenUI"] = GUIBuilder;
 })(this);

@@ -1,4 +1,4 @@
 CD GameLib
-dir /s /b > gamelib_list.txt
-notepad gamelib_list.txt
+dir /s /b > gamelib_list2.txt
+notepad gamelib_list2.txt
 exit

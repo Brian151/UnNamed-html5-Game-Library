@@ -9,3 +9,12 @@ todo :
 cleanup
 re-implement GUI update logic & management system
 handler registry system
+Resume work on July 28, 12:35 PM, MST
+current focus : handler registry system
+take break 1:11 PM
+resume on Aug 8, 7:56 PM
+current focus : image skins
+break 8:55 PM
+resume on Aug 16, 4:09 PM
+current focus : registry system
+break 5:44 PM

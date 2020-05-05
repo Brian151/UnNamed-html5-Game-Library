@@ -122,3 +122,19 @@
 
 	*it's still called eval(), but it's considered to be "evil" by most developers
 */
+/*
+	POSSIBLE START OF MASS IMPORTER
+	function external(tgt,callback) {
+	tgt.A = 1;
+  tgt.B = 2;
+  tgt.C = 3;
+  callback();
+}
+(function(){
+function doStuff() {
+	alert (A + B + C);
+}
+external(this,doStuff);
+//doStuff();
+})();
+*/

@@ -1,0 +1,87 @@
+readGraphicsData() returned data which was translated to the following CanvasContext2D draw commands : 
+ctx.fillStyle = "rgb(0,0,255)";
+ctx.beginPath();
+ctx.moveTo(200.1,191.35);
+ctx.lineTo(140.45,179.1);
+ctx.lineTo(133.15,113.6);
+ctx.lineTo(62.3,100.6);
+ctx.lineTo(0,215.8);
+ctx.lineTo(90.3,310.65);
+ctx.lineTo(208.45,254.1);
+ctx.lineTo(200.1,191.35);
+ctx.fill();
+ctx.fillStyle = "rgb(0,255,0)";
+ctx.beginPath();
+ctx.moveTo(200.1,191.35);
+ctx.lineTo(140.45,179.1);
+ctx.lineTo(133.15,113.6);
+ctx.lineTo(126.3,52.55);
+ctx.lineTo(242.25,0);
+ctx.lineTo(328.05,94.05);
+ctx.lineTo(265.15,204.7);
+ctx.lineTo(200.1,191.35);
+ctx.fill();
+ctx.lineStyle = "rgb(0,0,0)";
+ctx.lineWidth = 1;
+ctx.beginPath();
+ctx.moveTo(140.45,179.1);
+ctx.lineTo(133.15,113.6);
+ctx.lineTo(62.3,100.6);
+ctx.lineTo(0,215.8);
+ctx.lineTo(90.3,310.65);
+ctx.lineTo(208.45,254.1);
+ctx.lineTo(200.1,191.35);
+ctx.lineTo(140.45,179.1);
+ctx.moveTo(200.1,191.35);
+ctx.lineTo(265.15,204.7);
+ctx.lineTo(328.05,94.05);
+ctx.lineTo(242.25,0);
+ctx.lineTo(126.3,52.55);
+ctx.lineTo(133.15,113.6);
+ctx.stroke();
+
+the original dump was:
+[object GraphicsSolidFill]
+[object GraphicsPath]
+[object GraphicsEndFill]
+[object GraphicsSolidFill]
+[object GraphicsPath]
+[object GraphicsEndFill]
+[object GraphicsStroke]
+[object GraphicsPath]
+[object GraphicsStroke]
+[object GraphicsEndFill]
+
+Conclusion is that Graphics API when given a pre-defined shape does indeed display them in the manner already described
+for i in fillstyles do fillpaths()
+for i in linestyles do strokepaths()
+
+However, what is not made perfectly clear is how stokes actually work
+Whereas HTML5 has stroke() and fill() as separate commands, Flash uses a single command to call both
+the state machine that actually does the drawing must be keeping track of if there is supposed to be a fill or stoke
+Since the vector graphics engine in this library is meant to imitate the exact behavior of the Flash Graphics API,
+this design must be respected.
+This is especially true if an actual Flash shape is ever to be displayed here
+
+The example decoder handles this in the following way:
+initialize booleans hasfill, hasstroke to false
+for every IGraphicsFill, set hasfill to true
+for every GraphicsStroke, set hasstroke to true
+for every GraphicsEndFill:
+	hasfill = true:
+		set hasfill to false
+		call lower-level fill() operation
+	hasstroke = true:
+		set hasstroke to false
+		call lower-level stroke() operation
+		
+Additionally, it was observed that closePath() should not be used, as it can mess-up strokes
+
+TODO : 
+what happens if graphics API has both stroke and fill?
+Expected behavior would be to do the fill, and then the stroke.
+This is currently what the decoder exports
+test some more complex shapes [curves, sprites with color transforms,more fill/line styles]
+
+OTHER NOTES:
+The Graphics API does not do transforms, all transforms must be applied to the source data before rendering

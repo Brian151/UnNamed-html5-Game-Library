@@ -1,4 +1,4 @@
-package kittengine.core;
+package kittengine.core.service;
 import js.Browser;
 import js.html.CanvasElement;
 

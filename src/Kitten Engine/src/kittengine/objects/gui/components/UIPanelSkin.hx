@@ -1,6 +1,7 @@
 package kittengine.objects.gui.components;
 import kittengine.objects.gui.UIBaseComponent;
 import kittengine.core.api.BasicGraphicsAPI;
+import js.Browser.console;
 
 /**
  * ...
@@ -41,17 +42,19 @@ class UIPanelSkin extends UIBaseComponent
 	var r1 = right - 1;
 	var b1 = bot - 1;
 	var l1 = left - 1;*/
+	console.log(posX + " , " + posY);
+	
 		BasicGraphicsAPI.setFillStyle(color);
 		// edge borders
-		BasicGraphicsAPI.fillRect(20, 20 - sizeTop, width, sizeTop);
-		BasicGraphicsAPI.fillRect(20, 20 + height, width, sizeBot);
-		BasicGraphicsAPI.fillRect(20 - sizeLeft, 20, sizeLeft, height);
-		BasicGraphicsAPI.fillRect(20 + width, 20, sizeRight, height);
+		BasicGraphicsAPI.fillRect(posX, posY - sizeTop, width, sizeTop);
+		BasicGraphicsAPI.fillRect(posX, posY + height, width, sizeBot);
+		BasicGraphicsAPI.fillRect(posX - sizeLeft, posY, sizeLeft, height);
+		BasicGraphicsAPI.fillRect(posX + width, posY, sizeRight, height);
 		// corner borders
-		BasicGraphicsAPI.fillRect(20 - sizeLeft, 20 - sizeTop, sizeLeft, sizeTop);
-		BasicGraphicsAPI.fillRect(20 + width, 20 - sizeTop, sizeRight, sizeTop);
-		BasicGraphicsAPI.fillRect(20 - sizeLeft, 20 + height, sizeLeft, sizeBot);
-		BasicGraphicsAPI.fillRect(20 + width, 20 + height, sizeRight, sizeBot);
+		BasicGraphicsAPI.fillRect(posX - sizeLeft, posY - sizeTop, sizeLeft, sizeTop);
+		BasicGraphicsAPI.fillRect(posX + width, posY - sizeTop, sizeRight, sizeTop);
+		BasicGraphicsAPI.fillRect(posX - sizeLeft, posY + height, sizeLeft, sizeBot);
+		BasicGraphicsAPI.fillRect(posX + width, posY + height, sizeRight, sizeBot);
 	}
 	
 }

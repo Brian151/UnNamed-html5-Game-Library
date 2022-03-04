@@ -8,7 +8,6 @@ import kittengine.core.service.graphics.EGraphicsCMDID;
 
 // TODO : 
 //		generic base class/interface
-//		cull public functions
 //		image/texture cache
 
 // but for time reasons, this will have to do for now
@@ -39,49 +38,6 @@ class HTML5Context2DGraphicsService
 			success = false;
 		}
 		return success;
-	}
-	
-	public function rect(x:Int, y:Int, width:Int, height:Int) {
-		target.rect(cast x, cast y, cast width, cast height);
-	}
-	
-	public function ellipse(x:Int, y:Int, hradius:Int, vradius:Int) {
-		target.ellipse(cast x, cast y, cast hradius, cast vradius, 0.0, 0.0, 0.0, false);
-	}
-	
-	public function line(x:Int,y:Int)
-	{
-		target.lineTo(cast x, cast y);
-	}
-	
-	public function quadCurve() {
-		// TODO, CURVES ARE COMPLICATED
-	}
-	
-	public function cubicCurve()
-	{
-		// TODO
-	}
-	
-	// also needs work, thanks HTML5 canvas for being weird...
-	public function setFillStyle(fs:String) {
-		target.fillStyle = fs;
-	}
-	
-	public function fill() {
-		target.fill();
-	}
-	
-	public function clearRect(x:Int, y:Int, width:Int, height:Int) {
-		target.clearRect(cast x, cast y, cast width, cast height);
-	}
-	
-	public function fillRect(x:Int, y:Int, width:Int, height:Int) {
-		target.fillRect(cast x, cast y, cast width, cast height);
-	}
-	
-	public function closePath() {
-		target.closePath();
 	}
 	
 	public function drawImage(x:Int, y:Int, img:Image) {

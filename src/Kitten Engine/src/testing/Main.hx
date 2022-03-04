@@ -1,11 +1,11 @@
 package testing;
 import js.html.Image;
-import kittengine.objects.gui.components.UIPanelSkin;
-import testing.demo1.obj.SquareManager;
 import kittengine.core.Game;
-import kittengine.objects.sprites.SimpleSprite;
+import kittengine.objects.gui.components.UIPanelSkin;
 import kittengine.objects.gui.UIBaseComponent;
-import kittengine.core.service.GUIManager;
+import kittengine.objects.sprites.SimpleSprite;
+import testing.demo1.obj.SquareManager;
+
 
 /**
  * ...
@@ -24,16 +24,18 @@ class Main
 			game.init();
 			var ui:UIBaseComponent = new UIBaseComponent();
 			var ui2:UIPanelSkin = new UIPanelSkin();
-			var ui3:GUIManager = new GUIManager();
-			/*ui.resize(0, 200, 0, 100);
-			ui.parent = ui3;
-			ui.setPosition(0, 20, 0, 20);
-			ui3.children.push(ui);
-			ui2.resize(0,200,0,100);
-			ui2.setBorders(10, 3, 3, 3);
-			ui.children.push(ui2);*/
+			var ui3:UIBaseComponent = new UIBaseComponent();
+			ui3.visible = false;
+			ui3.resize(0, 600, 0, 400); // todo : no magic numbers!
+			ui3.addChild(ui);
+			ui.addChild(ui2);
+			ui.resize(0, 200, 0, 100);
+			ui.setPosition(0, 100, 0, 100);
+			ui2.setBorders(16, 4, 4, 4);
+			ui2.setPosition(0, 0, 0, 0);
+			ui2.resize(1, 0, 1, 0);
 			game.gameObjects.push(new SquareManager(game, spr));
-			//game.gameObjects.push(ui3);
+			game.gameObjects.push(ui3);
 			game.run(0);
 		}
 		image.src = "assets/demo1_prototype/spritetest.png";
